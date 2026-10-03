@@ -1,0 +1,43 @@
+/* Button components */
+
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+}
+
+.btn {
+    font: inherit;
+    padding: var(--space-sm) var(--space-md);
+    border: 1px solid var(--color-primary);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: box-shadow 0.2s, background 0.2s;
+
+    &.primary {
+        background: var(--color-primary);
+        color: var(--color-background);
+    }
+
+    &.secondary {
+        background: transparent;
+        color: var(--color-primary);
+    }
+
+    &:hover:not(:disabled) {
+        box-shadow: var(--shadow-glow);
+        background: var(--color-accent);
+        border-color: var(--color-accent);
+        color: var(--color-background);
+    }
+
+    &:focus-visible {
+        outline: 3px solid var(--color-focus);
+        outline-offset: 2px;
+    }
+
+    &:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+}

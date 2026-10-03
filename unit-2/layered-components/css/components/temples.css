@@ -1,0 +1,27 @@
+/* Temple list component */
+
+.temples {
+    display: grid;
+    gap: var(--space-sm);
+
+    li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: var(--space-md);
+        padding: var(--space-sm) var(--space-md);
+        background: var(--color-surface);
+        border-left: 3px solid var(--color-border);
+        border-radius: var(--radius);
+    }
+
+    .temple-status {
+        font-size: 0.8rem;
+        padding: 0.15rem 0.6rem;
+        border-radius: 999px;
+        border: 1px solid currentColor;
+
+        &.open { color: var(--color-success); }
+        &.construction { color: var(--color-warning); }
+    }
+}
