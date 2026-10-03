@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo</title>
+    <style>
+        #demo-list {
+            list-style: none;
+            padding: 0;
+            max-width: 300px;
+            }
+
+            #demo-list li {
+            padding: 0.75rem;
+            }
+
+            /* #demo-list li:nth-child(even of :not([hidden])) {
+            background: #f1f5f9;
+            } */
+
+            #demo-list li:nth-child(even) {
+                background: #f1f5f9;
+            }
+
+            #demo-list li.featured {
+            font-weight: bold;
+            }
+    </style>
+</head>
+<body>
+    <ul id="demo-list">
+        <li>Apples</li>
+        <li class="featured">★ Bananas</li>
+        <li>Cherries</li>
+        <li class="featured">★ Dates</li>
+        <li>Elderberries</li>
+        <li>Figs</li>
+        <li class="featured">★ Grapes</li>
+        <li>Honeydew</li>
+    </ul>
+
+    <button id="toggle">Hide non-featured items</button>
+    <script>
+        const listItems = document.querySelectorAll("#demo-list li");
+        const toggleButton = document.querySelector("#toggle");
+
+        toggleButton.addEventListener("click", () => {
+        listItems.forEach((item) => {
+            item.hidden = !item.classList.contains("featured");
+        });
+        });
+    </script>
+</body>
+
+</html>

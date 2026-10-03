@@ -1,0 +1,16 @@
+/* Utility classes: last layer, so they beat components without !important. */
+
+.text-center { text-align: center; }
+
+.text-muted { color: var(--color-text-muted); }
+
+.mt-lg { margin-top: var(--space-lg); }
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
