@@ -1,0 +1,26 @@
+{
+  "name": "wdd331-portfolio",
+  "version": "1.0.0",
+  "description": "**Student:** Jaeden Platt\r **Semester:** Fall 2026\r **Live Site:** [View Site](https://jaedenp2003.github.io/wdd331-portfolio/)",
+  "main": "index.js",
+  "scripts": {
+    "build": "lightningcss --bundle --minify --targets \">= 0.25%\" css/main.css -o dist/styles.css",
+    "watch": "chokidar \"css/**/*.css\" -c \"npm run build\" --debounce 600"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JaedenP2003/wdd331-portfolio.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/JaedenP2003/wdd331-portfolio/issues"
+  },
+  "homepage": "https://github.com/JaedenP2003/wdd331-portfolio#readme",
+  "devDependencies": {
+    "chokidar-cli": "^3.0.0",
+    "lightningcss-cli": "^1.33.0"
+  }
+}
