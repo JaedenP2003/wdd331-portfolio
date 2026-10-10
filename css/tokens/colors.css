@@ -1,0 +1,14 @@
+/* Color tokens: Sheikah-slate palette, muted and low-glare.
+   Named by purpose, not appearance. */
+:root {
+    --color-background: #12181c;
+    --color-surface: #1b242a;
+    --color-text: #cfe3e6;
+    --color-text-muted: #8fa6ac;
+    --color-primary: #3fb6c9;
+    --color-accent: #e8a33d;
+    --color-border: #2d3d45;
+    --color-link: var(--color-primary);
+    --color-link-hover: var(--color-accent);
+    --color-focus: #f0c674;
+}

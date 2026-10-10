@@ -1,0 +1,17 @@
+/* Non-color tokens: spacing, typography, radius, shadow. */
+:root {
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 2rem;
+    --space-xl: 3rem;
+
+    --font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    --font-size-base: 1rem;
+    --font-size-small: 0.875rem;
+    --line-height-base: 1.6;
+
+    --radius: 0.5rem;
+
+    --shadow-glow: 0 0 0.75rem rgb(63 182 201 / 0.25);
+}

@@ -1,0 +1,30 @@
+/* Base element styles: bare HTML selectors only, no classes. */
+
+body {
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+    color: var(--color-text);
+    background-color: var(--color-background);
+}
+
+:where(h1, h2, h3) {
+    line-height: 1.2;
+}
+
+h1 {
+    font-size: clamp(1.75rem, 1.2rem + 2.5vw, 2.75rem);
+    color: var(--color-primary);
+}
+
+a {
+    color: var(--color-link);
+
+    &:hover {
+        color: var(--color-link-hover);
+    }
+}
+
+ul {
+    list-style: none;
+}

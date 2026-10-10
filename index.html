@@ -3,28 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jaeden PLatt - Portfolio</title>
+    <title>Jaeden Platt - WDD 331R Advanced CSS</title>
     <link rel="stylesheet" href="css/main.css">
 </head>
-<nav>
-    <h2>Assignments</h2>
-    <ul>
-        <li>
-            <a href="unit-1/custom-properties/index.html">
-                Custom Properties and Nesting
-            </a>
-        </li>
-        <li>
-            <a href="unit-2/layered-components/index.html">
-                Layered Components
-            </a>
-        </li>
-    </ul>
-</nav>
 <body>
+    <nav class="site-nav" aria-label="Main">
+        <span class="brand">Jaeden Platt</span>
+        <ul>
+            <li><a href="unit-1/custom-properties/index.html">Custom Properties and Nesting</a></li>
+            <li><a href="unit-1/choose-topic/demo.html">nth-child() Demo</a></li>
+            <li><a href="unit-2/layered-components/index.html">Layered Components</a></li>
+            <li><a href="unit-2/lightning-css-demo/index.html">Lightning CSS Demo</a></li>
+        </ul>
+    </nav>
+
     <header>
         <h1>Jaeden Platt</h1>
+        <p class="text-muted">WDD 331R Advanced CSS</p>
         <p>Welcome to my portfolio website! Here you can find information about my projects, skills, and experience in web development. A little about me: I love creating and developing websites that show creativity and personalization.</p>
     </header>
+
+    <main>
+        <section class="assignments" id="assignments">
+            <h2>Assignments</h2>
+
+            <fieldset class="filter">
+                <legend class="visually-hidden">Filter assignments by unit</legend>
+                <input type="radio" name="unit" id="filter-all" class="visually-hidden" checked>
+                <label for="filter-all">All</label>
+                <input type="radio" name="unit" id="filter-1" class="visually-hidden">
+                <label for="filter-1">Unit 1</label>
+                <input type="radio" name="unit" id="filter-2" class="visually-hidden">
+                <label for="filter-2">Unit 2</label>
+            </fieldset>
+
+            <ul class="cards">
+                <li class="card" data-unit="1">
+                    <span class="card-tag">Unit 1</span>
+                    <h3><a href="unit-1/custom-properties/index.html">Custom Properties and Nesting</a></h3>
+                </li>
+                <li class="card" data-unit="1">
+                    <span class="card-tag">Unit 1</span>
+                    <h3><a href="unit-1/choose-topic/demo.html">nth-child() Demo</a></h3>
+                </li>
+                <li class="card" data-unit="2">
+                    <span class="card-tag">Unit 2</span>
+                    <h3><a href="unit-2/layered-components/index.html">Layered Components</a></h3>
+                </li>
+                <li class="card" data-unit="2">
+                    <span class="card-tag">Unit 2</span>
+                    <h3><a href="unit-2/lightning-css-demo/index.html">Lightning CSS Demo</a></h3>
+                </li>
+            </ul>
+        </section>
+    </main>
+
+    <footer class="text-center text-muted">
+        <p>&copy; Jaeden Platt. Built for WDD 331R Advanced CSS.</p>
+    </footer>
 </body>
 </html>
