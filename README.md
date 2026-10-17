@@ -27,23 +27,43 @@ into its layer, so later layers win without relying on specificity.
 
 ```
 css/
-├── tokens/        colors.css, variables.css   (custom properties)
-├── base/          reset.css, elements.css     (bare element styles)
-├── layout/        primary.css                 (page structure)
-├── components/    nav.css, cards.css          (reusable pieces)
-├── utilities/     utilities.css               (single-purpose helpers)
-└── main.css                                   (layer order + imports)
+├── tokens/        colors.css, variables.css        (custom properties)
+├── base/          reset.css, elements.css          (bare element styles)
+├── layout/        primary.css                      (page structure)
+├── components/    nav.css, cards.css,
+│                  theme-toggle.css                 (reusable pieces)
+├── utilities/     utilities.css                    (single-purpose helpers)
+└── main.css                                        (layer order + imports)
+js/
+└── theme-preference.js                             (saves the theme choice)
 dist/
-└── styles.css                                 (bundled, minified output)
+└── styles.css                                      (bundled, minified output)
 ```
 
 Layer order: `tokens, base, layout, components, utilities`.
 
-- **Tokens:** Sheikah-slate color palette, spacing, typography, radius
-  and shadow, named by purpose (for example `--color-primary`,
-  `--space-md`).
+- **Tokens:** spacing, typography, radii, transitions, icon sizes and
+  focus width live in `css/tokens/variables.css`. Colors live in
+  `css/tokens/colors.css` (see Dark Mode below).
 - **Components:** the site nav and the assignment cards, which include
-  a CSS-only filter by unit (radio inputs plus `:has()`).
+  a CSS-only filter by unit (radio inputs plus `:has()`) and the theme toggle.
+
+## Dark Mode
+
+The site supports light, dark and system-default color schemes. Use the
+theme menu in the nav to switch; the choice is saved in `localStorage`
+and restored by `js/theme-preference.js`.
+
+All color tokens live in `css/tokens/colors.css`:
+
+- **Seeds:** raw light-mode colors and an `oklch()` accent (hue 205, cyan).
+- **Accent ramp:** `--accent-200` to `--accent-800`, built with
+  `color-mix()` from the seed.
+- **Scheme switching:** `:has()` on the `theme-preference` radios sets
+  `color-scheme` on `html`.
+- **Semantic tokens:** `--color-bg`, `--color-text`, `--color-accent` and
+  others use `light-dark()` so one declaration covers both modes.
+  Components should only use these semantic tokens.  
 
 ## Build Tool
 

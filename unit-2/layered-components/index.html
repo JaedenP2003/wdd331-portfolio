@@ -7,14 +7,36 @@
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-    <nav class="site-nav">
-        <a href="../../index.html">&larr; Home</a>
+    <nav class="site-nav" aria-label="Main">
+        <span class="brand">Jaeden Platt</span>
         <ul>
-            <li><a href="#" aria-current="page">Study</a></li>
-            <li><a href="#">Bookmarks</a></li>
-            <li><a href="#">Journal</a></li>
-            <li><a href="#">Temples</a></li>
+            <li><a href="unit-1/custom-properties/index.html">Custom Properties and Nesting</a></li>
+            <li><a href="unit-1/choose-topic/demo.html">nth-child() Demo</a></li>
+            <li><a href="unit-2/layered-components/index.html">Layered Components</a></li>
+            <li><a href="unit-2/lightning-css-demo/index.html">Lightning CSS Demo</a></li>
         </ul>
+        <details class="theme-menu">
+            <summary class="theme-control">
+                <span class="visually-hidden">Color scheme</span>
+            </summary>
+            <div class="theme-extra" role="group" aria-label="Choose color scheme">
+                <label class="theme-control theme-pick" data-theme-pick="light">
+                    <input name="theme-preference" type="radio" value="light">
+                    <span aria-hidden="true">&#9788;&#65039;</span>
+                    <span class="visually-hidden">Light</span>
+                </label>
+                <label class="theme-control theme-pick" data-theme-pick="system">
+                    <input name="theme-preference" type="radio" value="system" checked>
+                    <span aria-hidden="true">&#9881;&#65039;</span>
+                    <span class="visually-hidden">System default</span>
+                </label>
+                <label class="theme-control theme-pick" data-theme-pick="dark">
+                    <input name="theme-preference" type="radio" value="dark">
+                    <span aria-hidden="true">&#127766;</span>
+                    <span class="visually-hidden">Dark</span>
+                </label>
+            </div>
+        </details>
     </nav>
 
     <header class="page-header">

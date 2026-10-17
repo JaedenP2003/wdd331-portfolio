@@ -1,14 +1,84 @@
-/* Color tokens: Sheikah-slate palette, muted and low-glare.
-   Named by purpose, not appearance. */
+/* Color tokens: Sheikah-slate palette with light and dark modes.
+   Seeds -> accent ramp -> scheme switching -> semantic tokens.
+   Components should only use the semantic --color-* tokens. */
+
+/* a. Seeds: raw light-mode colors */
 :root {
-    --color-background: #12181c;
-    --color-surface: #1b242a;
-    --color-text: #cfe3e6;
-    --color-text-muted: #8fa6ac;
-    --color-primary: #3fb6c9;
-    --color-accent: #e8a33d;
-    --color-border: #2d3d45;
-    --color-link: var(--color-primary);
-    --color-link-hover: var(--color-accent);
-    --color-focus: #f0c674;
+    color-scheme: light;
+
+    --seed-bg: #f3f7f8;
+    --seed-surface: #ffffff;
+    --seed-text: #17262b;
+    --seed-text-muted: #51666c;
+    --seed-border: #cfdde1;
+    --seed-border-strong: #9fb5bb;
+
+    /* Accent hue 205 is cyan: change the last number to change the hue */
+    --seed-accent: oklch(0.52 0.11 205);
+    --seed-accent-hover: color-mix(in oklch, var(--seed-accent) 80%, black);
+
+    --seed-link: var(--seed-accent);
+    --seed-link-hover: var(--seed-accent-hover);
+}
+
+/* b. Accent ramp: percentage is the share of the seed in the mix */
+:root {
+    --accent-200: color-mix(in oklch, var(--seed-accent) 30%, white);
+    --accent-300: color-mix(in oklch, var(--seed-accent) 50%, white);
+    --accent-400: color-mix(in oklch, var(--seed-accent) 75%, white);
+    --accent-500: var(--seed-accent);
+    --accent-600: color-mix(in oklch, var(--seed-accent) 75%, black);
+    --accent-700: color-mix(in oklch, var(--seed-accent) 50%, black);
+    --accent-800: color-mix(in oklch, var(--seed-accent) 30%, black);
+}
+
+/* c. Color-scheme switching: driven by the theme-preference radios */
+html:has(input[name="theme-preference"][value="dark"]:checked) {
+    color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+    html:has(input[name="theme-preference"][value="system"]:checked) {
+        color-scheme: dark;
+    }
+}
+
+/* d. Semantic tokens: light-dark(light value, dark value) */
+:root,
+html {
+    --color-bg: light-dark(var(--seed-bg), oklch(0.18 0.015 220));
+    --color-surface: light-dark(var(--seed-surface), oklch(0.23 0.02 225));
+    --color-text: light-dark(var(--seed-text), oklch(0.9 0.02 210));
+    --color-text-muted: light-dark(var(--seed-text-muted), oklch(0.72 0.03 215));
+
+    --color-accent: light-dark(var(--seed-accent), oklch(0.76 0.11 205));
+    --color-accent-hover: light-dark(var(--seed-accent-hover), oklch(0.84 0.1 205));
+    --color-link: light-dark(var(--seed-link), oklch(0.8 0.1 205));
+    --color-link-hover: light-dark(var(--seed-link-hover), oklch(0.88 0.08 205));
+
+    --color-border: light-dark(var(--seed-border), oklch(0.32 0.03 225));
+    --color-border-strong: light-dark(var(--seed-border-strong), oklch(0.45 0.04 220));
+
+    --color-focus: light-dark(oklch(0.55 0.13 75), oklch(0.85 0.1 85));
+
+    accent-color: var(--color-accent);
+
+    /* Header */
+    --header-bg: light-dark(var(--accent-500), var(--accent-700));
+    --header-text: light-dark(#ffffff, oklch(0.97 0.01 205));
+
+    /* Theme toggle: built from the header colors */
+    --theme-toggle-bg: color-mix(in srgb, var(--header-text) 15%, transparent);
+    --theme-toggle-border: color-mix(in srgb, var(--header-text) 35%, transparent);
+    --theme-toggle-bg-hover: color-mix(in srgb, var(--header-text) 25%, transparent);
+
+    /* Shadows: stronger in dark mode */
+    --shadow-color: light-dark(oklch(0.3 0.03 220 / 0.18), oklch(0 0 0 / 0.5));
+    --shadow-sm: 0 1px 3px var(--shadow-color);
+    --shadow-md: 0 4px 12px var(--shadow-color);
+    --shadow-glow: 0 0 1.2rem color-mix(in oklch, var(--color-accent) 30%, transparent);
+
+    /* Legacy names: point at the tokens above so older rules keep working */
+    --color-background: var(--color-bg);
+    --color-primary: var(--color-accent);
 }
