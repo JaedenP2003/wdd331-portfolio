@@ -54,4 +54,12 @@
             }
         }
     });
+    document.addEventListener('DOMContentLoaded', () => {
+        const saved = document.querySelector(
+            'input[name="theme-preference"][value="' + value + '"]'
+        );
+        if (saved) {
+            saved.checked = true;
+        }
+    });
 })();
