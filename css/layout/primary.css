@@ -6,7 +6,7 @@ body {
 }
 
 body > :is(nav, header, main, footer) {
-    max-width: 64rem;
+    max-width: 102.4rem;
     margin-inline: auto;
 }
 

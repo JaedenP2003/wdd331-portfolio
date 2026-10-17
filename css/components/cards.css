@@ -37,7 +37,7 @@
 
 .cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 25.6rem), 1fr));
     gap: clamp(var(--space-sm), 2vw, var(--space-lg));
 }
 
@@ -70,7 +70,7 @@
     }
 
     h3 {
-        font-size: 1.15rem;
+        font-size: var(--font-size-lg);
     }
 
     /* Stretch the link so the whole card is clickable. */
