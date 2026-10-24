@@ -1,0 +1,170 @@
+/* =====================================================================
+   BLEND MODES DEMO — styles.css
+   Lines 1-97 = the CSS you show in the video, in the same order as the video.
+   Look for the  ▶ VIDEO  banners. Everything below the "SKIP ON CAMERA"
+   banner is just page layout and light/dark theming.
+   ===================================================================== */
+
+
+/* ▶ VIDEO 6:30 — Start with ONE custom property for the overlay color
+   ===================================================================== */
+:root {
+  --overlay: #c2410c;          /* the one overlay color everything uses */
+  --photo: url("hero.jpg");    /* the one photo everything uses */
+}
+
+
+/* ▶ VIDEO 1:00 — Inward vs. outward
+   ===================================================================== */
+
+/* INWARD: background-blend-mode — the element's OWN layers blend together */
+.inward {
+  background-color: var(--overlay);   /* bottom layer */
+  background-image: var(--photo);     /* top layer    */
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: multiply;    /* color + photo blend with each other */
+}
+
+/* OUTWARD: mix-blend-mode — the element blends with whatever is BEHIND it */
+.outward__tint {
+  background: var(--overlay);
+  mix-blend-mode: multiply;           /* blends with the photo behind it */
+}
+
+
+/* ▶ VIDEO 3:30 — Four families (same photo, same color, only the mode changes)
+   The tiles get their mode inline in index.html, e.g.
+   style="background-blend-mode: screen"
+   ===================================================================== */
+.tile {
+  background-color: var(--overlay);
+  background-image: var(--photo);
+  background-size: cover;
+  background-position: center;
+  /* background-blend-mode is set per tile (multiply, screen, overlay, color) */
+}
+
+
+/* ▶ VIDEO 6:30 — Hero overlay with background-blend-mode
+   ===================================================================== */
+.hero {
+  background-color: var(--overlay);
+  background-image: var(--photo);
+  background-size: cover;
+  background-position: center bottom;
+  background-blend-mode: multiply;    /* the dropdown overrides this live */
+}
+
+/* Gradient version: two image layers (gradient on top, photo below) */
+.hero.is-gradient {
+  background-image: linear-gradient(to top, var(--overlay), #6d28d9), var(--photo);
+}
+
+
+/* ▶ VIDEO 9:30 — Why blended text is risky
+   ===================================================================== */
+
+/* RISKY: text color is calculated from whatever is behind it */
+.textbox--risky span {
+  color: #fff;
+  mix-blend-mode: difference;
+}
+
+/* SAFER: blend the BACKGROUND, keep the text a normal solid color */
+.textbox--safe {
+  background-color: rgb(0 0 0 / .6);
+  background-blend-mode: multiply;
+}
+.textbox--safe span {
+  color: #fff;
+}
+
+
+/* ▶ VIDEO 11:30 — isolation: isolate and "colors explode"
+   ===================================================================== */
+
+/* The glow blends with EVERYTHING behind it, up to the nearest stacking context */
+.iso-glow {
+  background: #f97316;
+  mix-blend-mode: color-dodge;
+}
+
+/* The fix: one line on the container. Blending now stays inside the card. */
+.iso-card.is-isolated {
+  isolation: isolate;
+}
+
+
+
+
+/* =====================================================================
+   SKIP ON CAMERA — page layout, theming and demo scaffolding
+   ===================================================================== */
+
+/* ---------- Theme (Light / System default / Dark) ---------- */
+:root {
+  --bg: #ffffff;
+  --fg: #111827;
+  --surface: #f3f4f6;
+  --border: #d1d5db;
+  --accent: #1d4ed8;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg:#0b1020; --fg:#e5e7eb; --surface:#151b2e; --border:#2b3350; --accent:#93c5fd; }
+}
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"]  { color-scheme: dark; --bg:#0b1020; --fg:#e5e7eb; --surface:#151b2e; --border:#2b3350; --accent:#93c5fd; }
+
+/* ---------- Base ---------- */
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.5 system-ui, sans-serif; }
+code { background:var(--surface); padding:.1em .35em; border-radius:4px; font-size:.9em; }
+main { max-width:1100px; margin:0 auto; padding:1rem 16px 4rem; }
+section { padding:2rem 0; border-bottom:1px solid var(--border); }
+h2 { margin:0 0 1rem; }
+figure { margin:0; }
+figcaption { margin-top:.5rem; font-size:.9rem; }
+
+.topbar { position:sticky; top:0; z-index:10; display:flex; flex-wrap:wrap; gap:.75rem 1.25rem; align-items:center;
+  padding:.5rem 16px; background:var(--surface); border-bottom:1px solid var(--border); }
+.topbar nav { display:flex; flex-wrap:wrap; gap:.75rem; flex:1; }
+.topbar a { color:var(--accent); text-decoration:none; }
+.scheme { display:flex; gap:.75rem; border:0; margin:0; padding:0; }
+.controls { display:flex; flex-wrap:wrap; gap:1rem; align-items:center; margin-bottom:1rem; }
+select, input[type="color"] { font:inherit; }
+.code { background:var(--surface); border:1px solid var(--border); padding:1rem; border-radius:8px; overflow:auto; }
+.code code { background:none; padding:0; }
+
+.grid { display:grid; gap:1rem; }
+.grid--2 { grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); }
+.grid--4 { grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); }
+.grid--8 { grid-template-columns:repeat(auto-fill, minmax(150px,1fr)); }
+
+/* ---------- Layout for the demo pieces ---------- */
+.tile { aspect-ratio:16/10; border-radius:8px; }
+.grid--8 figure { cursor:pointer; }
+.grid--8 figcaption { text-align:center; }
+
+.hero { min-height:60vh; display:grid; place-items:start center; border-radius:12px; color:#fff; text-align:center; padding:2.5rem 2rem 2rem; }
+.hero__content h3 { font-size:clamp(2rem,6vw,3.5rem); margin:0 0 .5rem; text-shadow:0 2px 8px rgb(0 0 0 / .45); }
+.hero__content p { margin:0 0 1rem; text-shadow:0 1px 4px rgb(0 0 0 / .5); }
+.btn { display:inline-block; padding:.6rem 1.2rem; background:#fff; color:#111; border-radius:999px; text-decoration:none; font-weight:600; }
+
+.stripes { padding:1.25rem; border-radius:12px;
+  background: repeating-linear-gradient(45deg, #ef4444 0 20px, #fde047 20px 40px, #22c55e 40px 60px); }
+.inward { aspect-ratio:16/10; border-radius:8px; }
+.outward { position:relative; aspect-ratio:16/10; border-radius:12px; overflow:hidden; background-image:var(--photo); background-size:cover; background-position:center; }
+.outward__tint { position:absolute; inset:0 50% 0 0; }
+
+.textbox { --x:5%; position:relative; aspect-ratio:16/10; border-radius:12px; overflow:hidden;
+  background-image:var(--photo); background-size:cover; background-position:center; display:flex; align-items:center; }
+.textbox span { position:relative; margin-left:var(--x); font-size:clamp(1.5rem,4vw,2.4rem); font-weight:800; white-space:nowrap; }
+
+.iso-stage { padding:3rem 2rem; border-radius:12px;
+  background: linear-gradient(90deg, #ff0080, #ffd000, #00e0ff, #7c3aed); }
+.iso-card { position:relative; max-width:420px; margin:0 auto; padding:0; }  /* no background, no stacking context */
+.iso-photo { aspect-ratio:16/10; border-radius:8px; background-image:var(--photo); background-size:cover; background-position:center; }
+.iso-glow { position:absolute; inset:-2.5rem -2rem; border-radius:16px; pointer-events:none; }
+.iso-label { position:absolute; left:1rem; bottom:.75rem; margin:0; color:#fff; font-weight:700; text-shadow:0 1px 4px #000; }

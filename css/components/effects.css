@@ -1,0 +1,264 @@
+/* Visual effects: shadows, gradients, filters, backdrop-filter, drop-shadow.
+   Every color comes from a semantic token in colors.css, so each effect
+   flips correctly between light and dark mode. Shadow stacks and effect
+   amounts come from variables.css. */
+
+
+/* ---------- Hero: gradient scrim + text-shadow ---------- */
+.hero {
+    position: relative;
+    isolation: isolate;               /* keep the scrim and image inside the hero */
+    display: grid;
+    align-items: end;
+    min-height: clamp(26rem, 45vw, 40rem);
+    overflow: hidden;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    color: var(--hero-text);
+
+    .hero-image {
+        position: absolute;
+        inset: 0;
+        z-index: -2;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Three gradient layers: flat wash, bottom fade (for the text), radial vignette */
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background:
+            radial-gradient(ellipse at 50% 35%, transparent 40%, var(--hero-scrim-edge) 130%),
+            linear-gradient(to top, var(--hero-scrim-edge), transparent 70%),
+            linear-gradient(var(--hero-scrim), var(--hero-scrim));
+    }
+
+    .hero-content {
+        padding: clamp(var(--space-md), 4vw, var(--space-xl));
+        max-width: 64rem;
+    }
+
+    h1 {
+        color: var(--hero-text);
+        text-shadow: var(--hero-text-shadow);
+    }
+
+    p {
+        margin-top: var(--space-sm);
+        font-size: var(--font-size-lg);
+        text-shadow: var(--hero-text-shadow);
+    }
+}
+
+
+/* ---------- Elevation cards ---------- */
+.card-section {
+    margin-top: var(--space-xl);
+
+    .cards {
+        margin-top: var(--space-md);
+    }
+
+    /* Scoped under .card-section so these win over the assignment-card styles in cards.css */
+    .card {
+        gap: 0;
+        padding: 0;
+        overflow: hidden;
+        color: var(--color-text);
+        background: var(--color-surface);
+        border-color: var(--color-border);
+        box-shadow: var(--shadow-sm);
+        transition:
+            box-shadow var(--transition-base),
+            background-color var(--transition-base),
+            transform var(--transition-base);
+
+        /* Lift: the shadow grows and the surface gets lighter in dark mode */
+        &:hover,
+        &:focus-within {
+            background: var(--color-surface-raised);
+            border-color: var(--color-border-strong);
+            box-shadow: var(--shadow-md);
+        }
+    }
+
+    .card-image {
+        width: 100%;
+        aspect-ratio: 16 / 10;
+        object-fit: cover;
+        transition: filter var(--transition-base);
+    }
+
+    .card-body {
+        display: grid;
+        gap: var(--space-sm);
+        padding: var(--space-md);
+
+        p {
+            color: var(--color-text-muted);
+        }
+    }
+
+    /* Card 2: subtle gradient surface, mixed from the accent so it flips with the theme */
+    .card--gradient {
+        background: linear-gradient(
+            160deg,
+            var(--color-surface),
+            color-mix(in oklch, var(--color-surface) 82%, var(--color-accent))
+        );
+    }
+
+    /* Card 3: muted image that comes alive on hover */
+    .card--filtered .card-image {
+        filter: var(--filter-muted);
+    }
+
+    .card--filtered:hover .card-image,
+    .card--filtered:focus-within .card-image {
+        filter: none;
+    }
+}
+
+/* Only move things when the user hasn't asked for less motion */
+@media (prefers-reduced-motion: no-preference) {
+    .card-section .card:hover,
+    .card-section .card:focus-within {
+        transform: translateY(var(--lift-md));
+    }
+}
+
+
+/* ---------- Frosted glass panel ---------- */
+.glass-section {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    place-items: center;
+    min-height: 34rem;
+    margin-top: var(--space-xl);
+    padding: var(--space-lg);
+    overflow: hidden;
+    border-radius: var(--radius);
+
+    /* The image sits behind the panel */
+    .glass-background {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+    }
+
+    .glass-bg-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.glass-panel {
+    max-width: 48rem;
+    padding: var(--space-lg);
+    color: var(--color-text);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+
+    h2 {
+        margin-bottom: var(--space-sm);
+    }
+}
+
+/* Fallback: a solid surface instead of the blur */
+@media (prefers-reduced-motion: reduce), (prefers-reduced-transparency: reduce) {
+    .glass-panel {
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+        background: var(--color-surface);
+        border-color: var(--color-border);
+    }
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .glass-panel {
+        background: var(--color-surface);
+        border-color: var(--color-border);
+    }
+}
+
+
+/* ---------- Icon row: drop-shadow follows the shape ---------- */
+.icon-section {
+    margin-top: var(--space-xl);
+
+    .icon-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-lg);
+        margin-top: var(--space-md);
+    }
+}
+
+.icon-item {
+    width: var(--icon-size-lg);
+    height: var(--icon-size-lg);
+    color: var(--color-accent);       /* the SVG strokes use currentColor */
+    filter: var(--icon-shadow);
+    transition:
+        filter var(--transition-base),
+        transform var(--transition-base);
+
+    &:hover {
+        filter: var(--icon-shadow-hover);
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .icon-item:hover {
+        transform: translateY(var(--lift-md));
+    }
+}
+
+
+/* ---------- Choose topic: blend modes ---------- */
+.blend-section {
+    isolation: isolate;               /* blends stay inside this section */
+    margin-top: var(--space-xl);
+
+    .blend-banner {
+        display: grid;
+        place-items: center;
+        min-height: 24rem;
+        margin-top: var(--space-md);
+        padding: var(--space-lg);
+        text-align: center;
+        color: var(--hero-text);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-md);
+
+        /* Color layer (bottom) + photo (top), blended with each other */
+        background-color: var(--blend-tint);
+        background-image: url("https://picsum.photos/seed/blend-effects/1200/500");
+        background-size: cover;
+        background-position: center;
+        background-blend-mode: multiply;
+
+        h3 {
+            font-size: clamp(2.4rem, 1.6rem + 2vw, 3.6rem);
+            text-shadow: var(--hero-text-shadow);
+        }
+
+        p {
+            text-shadow: var(--hero-text-shadow);
+        }
+    }
+
+    code {
+        font-family: var(--font-family-mono);
+    }
+}

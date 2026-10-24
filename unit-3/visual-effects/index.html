@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Effects</title>
+    <script src="../../js/theme-preference.js"></script>
+    <link rel="stylesheet" href="../../css/main.css">
+</head>
+<body>
+    <nav class="site-nav" aria-label="Main">
+        <a href="../../index.html">&larr; Home</a>
+        <ul>
+            <li><a href="#cards">Cards</a></li>
+            <li><a href="#glass">Glass</a></li>
+            <li><a href="#icons">Icons</a></li>
+            <li><a href="#blend">Blend modes</a></li>
+        </ul>
+        <details class="theme-menu">
+            <summary class="theme-control">
+                <span class="visually-hidden">Color scheme</span>
+            </summary>
+            <div class="theme-extra" role="group" aria-label="Choose color scheme">
+                <label class="theme-control theme-pick" data-theme-pick="light">
+                    <input name="theme-preference" type="radio" value="light">
+                    <span aria-hidden="true">&#9788;&#65039;</span>
+                    <span class="visually-hidden">Light</span>
+                </label>
+                <label class="theme-control theme-pick" data-theme-pick="system">
+                    <input name="theme-preference" type="radio" value="system" checked>
+                    <span aria-hidden="true">&#9881;&#65039;</span>
+                    <span class="visually-hidden">System default</span>
+                </label>
+                <label class="theme-control theme-pick" data-theme-pick="dark">
+                    <input name="theme-preference" type="radio" value="dark">
+                    <span aria-hidden="true">&#127766;</span>
+                    <span class="visually-hidden">Dark</span>
+                </label>
+            </div>
+        </details>
+    </nav>
+
+<!-- HERO: Use a gradient overlay and text-shadow for depth -->
+<header class="hero">
+    <img
+        class="hero-image"
+        src="https://picsum.photos/seed/hero-effects/1200/500"
+        alt="Landscape placeholder for hero section"
+    >
+    <div class="hero-content">
+        <h1>Visual Effects Showcase</h1>
+        <p>Shadows, gradients, and filters working together.</p>
+    </div>
+</header>
+
+<main>
+    <!-- CARDS: Elevation shadows, hover transitions -->
+    <section class="card-section" id="cards">
+        <h2>Elevation Cards</h2>
+        <div class="cards">
+            <article class="card">
+                <img
+                    class="card-image"
+                    src="https://picsum.photos/seed/card-1/400/250"
+                    alt="Placeholder image"
+                >
+                <!-- Replace placeholder images with your own if you prefer -->
+                <div class="card-body">
+                    <h3>Layered Shadows</h3>
+                    <p>
+                        Multiple shadow layers create realistic depth
+                        that changes on hover.
+                    </p>
+                </div>
+            </article>
+            <article class="card card--gradient">
+                <img
+                    class="card-image"
+                    src="https://picsum.photos/seed/card-2/400/250"
+                    alt="Placeholder image"
+                >
+                <div class="card-body">
+                    <h3>Gradient Surfaces</h3>
+                    <p>
+                        A subtle gradient on the card background adds
+                        dimension without distracting from content.
+                    </p>
+                </div>
+            </article>
+            <article class="card card--filtered">
+                <img
+                    class="card-image"
+                    src="https://picsum.photos/seed/card-3/400/250"
+                    alt="Placeholder image"
+                >
+                <div class="card-body">
+                    <h3>Filtered Images</h3>
+                    <p>
+                        A grayscale or sepia filter on the image that
+                        lifts on hover draws attention to active cards.
+                    </p>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- GLASS PANEL: backdrop-filter for frosted glass -->
+    <section class="glass-section" id="glass">
+        <div class="glass-background">
+            <img
+                src="https://picsum.photos/seed/glass-bg/1200/400"
+                alt="Background image behind glass panel"
+                class="glass-bg-image"
+            >
+        </div>
+        <div class="glass-panel">
+            <h2>Frosted Glass</h2>
+            <p>
+                This panel uses backdrop-filter to blur and saturate the
+                image behind it. The text stays sharp while the background
+                softens into a frosted surface.
+            </p>
+        </div>
+    </section>
+
+    <!-- ICON ROW: drop-shadow on transparent images -->
+    <section class="icon-section" id="icons">
+        <h2>Drop Shadow on Transparent Images</h2>
+        <p>
+            These icons use drop-shadow() instead of box-shadow so the shadow
+            follows the actual shape of each image rather than its bounding box.
+        </p>
+        <div class="icon-row">
+            <!-- Inline SVGs (Tabler icons): stroke="currentColor" lets the icon color follow CSS -->
+            <svg class="icon-item" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Heart icon"><path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" /></svg>
+            <svg class="icon-item" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Star icon"><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" /></svg>
+            <svg class="icon-item" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Bookmark icon"><path d="M18 7v14l-6 -4l-6 4v-14a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4z" /></svg>
+            <svg class="icon-item" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Message icon"><path d="M3 20l1.3 -3.9c-2.324 -3.437 -1.426 -7.872 2.1 -10.374c3.526 -2.501 8.59 -2.296 11.845 .48c3.255 2.777 3.695 7.266 1.029 10.501c-2.666 3.235 -7.615 4.215 -11.574 2.293l-4.7 1" /></svg>
+        </div>
+    </section>
+
+    <!-- CHOOSE TOPIC: blend modes -->
+    <section class="blend-section" id="blend">
+        <h2>Blend Modes</h2>
+        <p>
+            My choose topic was blend modes. This banner uses
+            <code>background-blend-mode: multiply</code> to blend a theme-aware
+            color layer with the photo, and the section uses
+            <code>isolation: isolate</code> so the blend stays inside it.
+        </p>
+        <div class="blend-banner">
+            <div>
+                <h3>Multiply Tint</h3>
+                <p>A color layer and a photo, blended in CSS.</p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <p>&copy; 2026 My portfolio</p>
+</footer>
+</body>
+</html>

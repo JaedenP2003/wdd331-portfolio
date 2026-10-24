@@ -72,11 +72,26 @@ html {
     --theme-toggle-border: color-mix(in srgb, var(--header-text) 35%, transparent);
     --theme-toggle-bg-hover: color-mix(in srgb, var(--header-text) 25%, transparent);
 
-    /* Shadows: stronger in dark mode */
+    /* Shadows: stronger in dark mode. The layered --shadow-sm / --shadow-md
+       stacks live in variables.css and are built from these two colors. */
     --shadow-color: light-dark(oklch(0.3 0.03 220 / 0.18), oklch(0 0 0 / 0.5));
-    --shadow-sm: 0 1px 3px var(--shadow-color);
-    --shadow-md: 0 4px 12px var(--shadow-color);
+    --shadow-color-soft: light-dark(oklch(0.3 0.03 220 / 0.1), oklch(0 0 0 / 0.3));
     --shadow-glow: 0 0 1.2rem color-mix(in oklch, var(--color-accent) 30%, transparent);
+
+    /* Effects: surfaces, hero scrim, glass, icons, blend tint */
+    /* In dark mode a higher surface is lighter, so shadows can be read */
+    --color-surface-raised: light-dark(var(--seed-surface), oklch(0.27 0.02 225));
+
+    --hero-text: oklch(0.98 0.005 210);
+    --hero-scrim: light-dark(oklch(0.2 0.03 220 / 0.4), oklch(0.1 0.02 220 / 0.6));
+    --hero-scrim-edge: light-dark(oklch(0.15 0.03 220 / 0.75), oklch(0.05 0.01 220 / 0.9));
+
+    --glass-bg: light-dark(oklch(1 0 0 / 0.68), oklch(0.2 0.02 225 / 0.68));
+    --glass-border: light-dark(oklch(1 0 0 / 0.7), oklch(1 0 0 / 0.18));
+
+    --icon-outline: light-dark(oklch(1 0 0), oklch(0.15 0.02 225));
+
+    --blend-tint: light-dark(var(--accent-600), var(--accent-500));
 
     /* Legacy names: point at the tokens above so older rules keep working */
     --color-background: var(--color-bg);

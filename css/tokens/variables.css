@@ -1,4 +1,4 @@
-/* Non-color tokens: spacing, typography, radius, shadow. */
+/* Non-color tokens: spacing, typography, radius, shadow and effect stacks. */
 :root {
     /* Typography */
     --font-family-sans: system-ui, sans-serif;
@@ -29,6 +29,41 @@
 
     /* Focus */
     --outline-width: 2px;
+
+    /* Shadows: layered stacks (ambient + key light). The colors come from
+       --shadow-color / --shadow-color-soft in colors.css, so they adapt to dark mode. */
+    --shadow-sm:
+        0 1px 2px var(--shadow-color-soft),
+        0 2px 5px var(--shadow-color);
+    --shadow-md:
+        0 2px 4px var(--shadow-color-soft),
+        0 6px 12px var(--shadow-color),
+        0 14px 28px var(--shadow-color-soft);
+
+    /* Effects */
+    --lift-md: -4px;
+    --glass-blur: 14px;
+    --glass-saturate: 160%;
+    --filter-muted: grayscale(1) brightness(0.95);
+    --hero-text-shadow:
+        0 1px 2px rgb(0 0 0 / 0.6),
+        0 4px 16px rgb(0 0 0 / 0.5);
+
+    /* Icons: four 1px drop-shadows make an outline, the last one is the soft shadow.
+       Same number of functions in both stacks so the hover can transition. */
+    --icon-size-lg: 48px;
+    --icon-shadow:
+        drop-shadow(1px 0 0 var(--icon-outline))
+        drop-shadow(-1px 0 0 var(--icon-outline))
+        drop-shadow(0 1px 0 var(--icon-outline))
+        drop-shadow(0 -1px 0 var(--icon-outline))
+        drop-shadow(0 3px 4px var(--shadow-color));
+    --icon-shadow-hover:
+        drop-shadow(1px 0 0 var(--icon-outline))
+        drop-shadow(-1px 0 0 var(--icon-outline))
+        drop-shadow(0 1px 0 var(--icon-outline))
+        drop-shadow(0 -1px 0 var(--icon-outline))
+        drop-shadow(0 8px 8px var(--shadow-color));
 
     /* Legacy names: point at the tokens above so older rules keep working */
     --font-family: var(--font-family-sans);
