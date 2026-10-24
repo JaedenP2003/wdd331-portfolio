@@ -18,6 +18,8 @@ every push to main.
 - [nth-child() Demo](unit-1/choose-topic/demo.html)
 - [Layered Components](unit-2/layered-components/index.html)
 - [Lightning CSS Demo](unit-2/lightning-css-demo/index.html)
+- [Visual Effects](unit-3/visual-effects/index.html)
+- [Blend Modes Demo](unit-3/blend-modes-demo/index.html)
 
 ## CSS Architecture
 
@@ -31,7 +33,7 @@ css/
 ├── base/          reset.css, elements.css          (bare element styles)
 ├── layout/        primary.css                      (page structure)
 ├── components/    nav.css, cards.css,
-│                  theme-toggle.css                 (reusable pieces)
+│                  theme-toggle.css, effects.css    (reusable pieces)
 ├── utilities/     utilities.css                    (single-purpose helpers)
 └── main.css                                        (layer order + imports)
 js/
@@ -42,11 +44,12 @@ dist/
 
 Layer order: `tokens, base, layout, components, utilities`.
 
-- **Tokens:** spacing, typography, radii, transitions, icon sizes and
-  focus width live in `css/tokens/variables.css`. Colors live in
+- **Tokens:** spacing, typography, radii, transitions, icon sizes, focus
+  width, layered shadow stacks and effect amounts live in `css/tokens/variables.css`. Colors live in
   `css/tokens/colors.css` (see Dark Mode below).
-- **Components:** the site nav and the assignment cards, which include
-  a CSS-only filter by unit (radio inputs plus `:has()`) and the theme toggle.
+- **Components:** the site nav, the assignment cards (with a CSS-only
+  filter by unit using radio inputs plus `:has()`), the theme toggle, and
+  the visual effects in `effects.css`.
 
 ## Dark Mode
 
@@ -64,6 +67,26 @@ All color tokens live in `css/tokens/colors.css`:
 - **Semantic tokens:** `--color-bg`, `--color-text`, `--color-accent` and
   others use `light-dark()` so one declaration covers both modes.
   Components should only use these semantic tokens.  
+
+## Visual Effects
+
+`unit-3/visual-effects/index.html` is styled by `css/components/effects.css`.
+Every effect uses semantic tokens, so it works in light, dark and system modes.
+
+- **Shadow tokens:** `--shadow-sm` and `--shadow-md` are layered stacks in
+  `variables.css`. Their colors (`--shadow-color`, `--shadow-color-soft`) are
+  stronger in dark mode, and a raised surface gets lighter in dark mode.
+- **Hero:** a three-layer gradient scrim (wash, bottom fade, vignette) plus a
+  layered `text-shadow`.
+- **Cards:** shadow lift on hover, a gradient surface, and an image `filter`
+  that clears on hover.
+- **Frosted glass:** `backdrop-filter: blur() saturate()` with a `light-dark()`
+  background. A solid fallback applies for `prefers-reduced-motion`,
+  `prefers-reduced-transparency` and browsers without `backdrop-filter`.
+- **Icons:** inline SVGs with stacked `drop-shadow()` calls and `currentColor`.
+- **Blend modes (choose topic):** a `background-blend-mode: multiply` banner
+  inside an `isolation: isolate` section. See also the
+  [Blend Modes Demo](unit-3/blend-modes-demo/index.html).
 
 ## Build Tool
 

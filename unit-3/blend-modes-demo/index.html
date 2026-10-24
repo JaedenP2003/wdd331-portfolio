@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blend Mode Comparison</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav class="site-nav" aria-label="Main">
+    <a href="../../index.html">&larr; Home</a>
+  </nav>
+
+<header class="topbar">
+  <strong>Blend Modes Demo</strong>
+  <nav aria-label="Sections">
+    <a href="#hero-demo">1 Hero</a>
+    <a href="#families">2 Families</a>
+    <a href="#inward-outward">3 In vs Out</a>
+    <a href="#a11y">4 Text</a>
+    <a href="#isolation">5 Isolation</a>
+    <a href="#all-modes">All 16</a>
+  </nav>
+  <fieldset class="scheme" aria-label="Color scheme">
+    <label><input type="radio" name="scheme" value="light"> ☀️ Light</label>
+    <label><input type="radio" name="scheme" value="system" checked> ⚙️ System default</label>
+    <label><input type="radio" name="scheme" value="dark"> 🌖 Dark</label>
+  </fieldset>
+</header>
+
+<main>
+
+<!-- 1. HERO OVERLAY -->
+<section id="hero-demo">
+  <h2>1 · Hero overlay with <code>background-blend-mode</code></h2>
+  <div class="controls">
+    <label>Overlay color <input type="color" id="overlay" value="#c2410c"></label>
+    <label>Blend mode <select id="hero-mode"></select></label>
+    <label><input type="checkbox" id="use-gradient"> Gradient instead of flat color</label>
+  </div>
+  <div class="hero" id="hero">
+    <div class="hero__content">
+      <h3>Golden Hour</h3>
+      <p>One custom property. One blend mode. Real text stays real text.</p>
+      <a class="btn" href="#families">Explore</a>
+    </div>
+  </div>
+  <pre class="code"><code>.hero {
+  --overlay: #c2410c;
+  background-color: var(--overlay);
+  background-image: url("hero.jpg");
+  background-size: cover;
+  background-blend-mode: multiply;
+}</code></pre>
+</section>
+
+<!-- 2. FAMILIES -->
+<section id="families">
+  <h2>2 · Four families, same photo</h2>
+  <div class="grid grid--4">
+    <figure><div class="tile" style="background-blend-mode:multiply"></div><figcaption><b>Darken</b><br><code>multiply</code></figcaption></figure>
+    <figure><div class="tile" style="background-blend-mode:screen"></div><figcaption><b>Lighten</b><br><code>screen</code></figcaption></figure>
+    <figure><div class="tile" style="background-blend-mode:overlay"></div><figcaption><b>Contrast</b><br><code>overlay</code></figcaption></figure>
+    <figure><div class="tile" style="background-blend-mode:color"></div><figcaption><b>Component</b><br><code>color</code></figcaption></figure>
+  </div>
+</section>
+
+<!-- 3. INWARD vs OUTWARD -->
+<section id="inward-outward">
+  <h2>3 · Inward vs. outward</h2>
+  <div class="grid grid--2">
+    <figure>
+      <div class="stripes"><div class="inward"></div></div>
+      <figcaption><b><code>background-blend-mode</code></b> is <em>inward</em>: the element's own layers (color + photo) blend with each other. The stripes behind never get involved.</figcaption>
+    </figure>
+    <figure>
+      <div class="outward">
+        <div class="outward__tint"></div>
+      </div>
+      <figcaption><b><code>mix-blend-mode</code></b> is <em>outward</em>: the tinted box (left half) blends with whatever is painted behind it.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 4. ACCESSIBILITY -->
+<section id="a11y">
+  <h2>4 · Why blended text is risky</h2>
+  <label class="controls">Slide the text across the photo
+    <input type="range" id="slide" min="0" max="60" value="5">
+  </label>
+  <div class="grid grid--2">
+    <figure>
+      <div class="textbox textbox--risky"><span id="risky-text">Read me if you can</span></div>
+      <figcaption><b>Risky:</b> <code>mix-blend-mode: difference</code> on the text. Its color changes with whatever is behind it, so contrast is unpredictable.</figcaption>
+    </figure>
+    <figure>
+      <div class="textbox textbox--safe"><span id="safe-text">Read me if you can</span></div>
+      <figcaption><b>Safer:</b> blend the <em>background</em>, keep text normal and white. Contrast is predictable everywhere.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 5. ISOLATION -->
+<section id="isolation">
+  <h2>5 · <code>isolation: isolate</code> and the “colors explode” problem</h2>
+  <div class="controls">
+    <label><input type="checkbox" id="iso-toggle"> <code>isolation: isolate</code> on the card</label>
+  </div>
+  <div class="iso-stage">
+    <div class="iso-card" id="iso-card">
+      <div class="iso-photo"></div>
+      <div class="iso-glow"></div>
+      <p class="iso-label">Card</p>
+    </div>
+  </div>
+  <pre class="code"><code>.card { isolation: isolate; }  /* blending stays inside the card */
+.glow { mix-blend-mode: color-dodge; }</code></pre>
+</section>
+
+<!-- ALL 16 -->
+<section id="all-modes">
+  <h2>Blend Mode Comparison</h2>
+  <p>This demo composites a color layer over a photo using <code>background-blend-mode</code>. Click a tile to send that mode to the hero.</p>
+  <div class="grid grid--8" id="mode-grid"></div>
+</section>
+
+</main>
+<script src="app.js"></script>
+</body>
+</html>
