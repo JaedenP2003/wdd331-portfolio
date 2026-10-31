@@ -1,0 +1,109 @@
+/* Editorial layout: article + sidebar using grid-template-areas.
+   Tokens and base styles come from the shared css/main.css. */
+
+.editorial-page {
+    /* Header: Flexbox, because the brand and nav are one row of items */
+    header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-md);
+        padding-block: var(--space-md);
+        border-bottom: 1px solid var(--color-border);
+
+        nav {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: var(--space-md);
+            white-space: nowrap;
+        }
+    }
+
+    /* Layout: stacked on small screens, article + sidebar on wide ones */
+    .layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas:
+            "main"
+            "sidebar";
+        gap: var(--space-lg);
+        max-width: 102.4rem;
+        margin-inline: auto;
+        margin-top: var(--space-lg);
+
+        main {
+            grid-area: main;
+        }
+
+        aside {
+            grid-area: sidebar;
+        }
+
+        @media (min-width: 768px) {
+            grid-template-columns: minmax(0, 1fr) 28rem;
+            grid-template-areas: "main sidebar";
+        }
+    }
+
+    /* Article */
+    article {
+        max-inline-size: 70ch;
+
+        h2 {
+            margin-top: var(--space-lg);
+        }
+
+        .byline {
+            color: var(--color-text-muted);
+            font-size: var(--font-size-sm);
+            margin-bottom: var(--space-md);
+        }
+
+        blockquote {
+            margin-block: var(--space-lg);
+            padding: var(--space-md);
+            background: var(--color-surface);
+            border-inline-start: 4px solid var(--color-accent);
+            border-radius: var(--radius-md);
+            font-style: italic;
+        }
+    }
+
+    /* Sidebar */
+    aside {
+        display: grid;
+        align-content: start;
+        gap: var(--space-md);
+
+        section {
+            padding: var(--space-md);
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+        }
+
+        ul {
+            display: grid;
+            gap: var(--space-sm);
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-sm);
+
+            li {
+                padding: var(--space-xs) var(--space-sm);
+                border: 1px solid var(--color-border-strong);
+                border-radius: 999px;
+                font-size: var(--font-size-sm);
+                color: var(--color-text-muted);
+            }
+        }
+    }
+
+    footer {
+        text-align: center;
+        color: var(--color-text-muted);
+    }
+}
