@@ -20,6 +20,9 @@ every push to main.
 - [Lightning CSS Demo](unit-2/lightning-css-demo/index.html)
 - [Visual Effects](unit-3/visual-effects/index.html)
 - [Blend Modes Demo](unit-3/blend-modes-demo/index.html)
+- [Editorial Layout](unit-4/grid-layouts/editorial.html)
+- [Card Grid](unit-4/grid-layouts/cards.html)
+- [display: contents Demo](unit-4/display-contents-demo/index.html)
 
 ## CSS Architecture
 

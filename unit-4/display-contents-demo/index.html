@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>display: contents Demo</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <strong>display: contents Demo</strong>
+  <nav aria-label="Sections">
+    <a href="#grid-demo">1 Grid</a>
+    <a href="#box-demo">2 Box</a>
+    <a href="#a11y-demo">3 Accessibility</a>
+    <a href="#alternatives">4 Alternatives</a>
+  </nav>
+  <fieldset class="scheme">
+    <legend class="visually-hidden">Color scheme</legend>
+    <label><input type="radio" name="scheme" value="light"> ☀️ Light</label>
+    <label><input type="radio" name="scheme" value="system" checked> ⚙️ System default</label>
+    <label><input type="radio" name="scheme" value="dark"> 🌖 Dark</label>
+  </fieldset>
+</header>
+
+<main>
+
+<!-- 1. BEFORE / AFTER GRID -->
+<section id="grid-demo">
+  <h2>1 · Side-by-side grid demo</h2>
+  <p>Same markup in both grids. The outer grid has three columns: <code>1fr 2fr 1fr</code>. Only the CSS on the yellow wrapper is different.</p>
+  <div class="grid grid--2">
+    <figure>
+      <figcaption><b>Problem: Wrapper Interrupts the Grid</b></figcaption>
+      <div class="demo-grid">
+        <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        <div class="wrapper">
+          <div class="item item--wrapped">4</div><div class="item item--wrapped">5</div><div class="item item--wrapped">6</div>
+        </div>
+      </div>
+    </figure>
+    <figure>
+      <figcaption><b>With display: contents on the wrapper</b></figcaption>
+      <div class="demo-grid demo-grid--contents">
+        <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        <div class="wrapper">
+          <div class="item item--wrapped">4</div><div class="item item--wrapped">5</div><div class="item item--wrapped">6</div>
+        </div>
+      </div>
+    </figure>
+  </div>
+  <pre class="code"><code>.wrapper { display: grid; grid-column: 1 / -1; ... }   /* problem */
+.wrapper { display: contents; }                        /* fix */</code></pre>
+</section>
+
+<!-- 2. BOX PROPERTIES -->
+<section id="box-demo">
+  <h2>2 · Box properties stop working</h2>
+  <div class="box-stage">
+    <label class="toggle"><input type="checkbox" id="toggle-box"> <code>display: contents</code> on the box</label>
+    <div class="box-area">
+      <div class="box-demo">
+        <p>I still inherit <code>color</code> and <code>font-size</code>.</p>
+      </div>
+    </div>
+    <p class="note">The dashed outline is the area the box used to take up. Padding, margin, border, background, width and height are all gone. The text is still here.</p>
+  </div>
+</section>
+
+<!-- 3. ACCESSIBILITY -->
+<section id="a11y-demo">
+  <h2>3 · Accessibility risks</h2>
+  <div class="a11y-stage">
+    <label class="toggle"><input type="checkbox" id="toggle-a11y"> Put <code>display: contents</code> on the button, link, text field and dropdown</label>
+
+    <div class="a11y-row">
+      <label>Name <input class="risky" type="text" data-label="Text field" placeholder="Type here"></label>
+      <button class="risky btn" type="button" data-label="Button">Save</button>
+      <a class="risky" href="#a11y-demo" data-label="Link">Skip link</a>
+      <select class="risky" aria-label="Pick one" data-label="Dropdown">
+        <option>One</option><option>Two</option>
+      </select>
+    </div>
+
+    <p class="note">Press <kbd>Tab</kbd> a few times. Then check what the browser says:</p>
+    <div id="focus-report" role="status" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- 4. ALTERNATIVES -->
+<section id="alternatives">
+  <h2>4 · Safer alternatives</h2>
+  <div class="grid grid--2">
+    <figure>
+      <figcaption><b>Subgrid:</b> the wrapper keeps its box and its meaning, and the items still line up.</figcaption>
+      <div class="demo-grid">
+        <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        <div class="wrapper--subgrid" role="group" aria-label="Items 4 to 6">
+          <div class="item item--wrapped">4</div><div class="item item--wrapped">5</div><div class="item item--wrapped">6</div>
+        </div>
+      </div>
+    </figure>
+    <figure>
+      <figcaption><b>Restructure the HTML:</b> no wrapper at all.</figcaption>
+      <div class="demo-grid">
+        <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        <div class="item item--wrapped">4</div><div class="item item--wrapped">5</div><div class="item item--wrapped">6</div>
+      </div>
+    </figure>
+  </div>
+  <pre class="code"><code>.wrapper--subgrid {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+}</code></pre>
+
+  <div class="grid grid--2 safe-list">
+    <div>
+      <h3>Reasonably safe</h3>
+      <ul>
+        <li>A plain <code>&lt;div&gt;</code> that only groups things</li>
+        <li>No role, no ARIA, not interactive</li>
+        <li>Tested in a browser and with a screen reader</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Never</h3>
+      <ul>
+        <li><code>&lt;button&gt;</code>, <code>&lt;a&gt;</code>, <code>&lt;input&gt;</code>, <code>&lt;select&gt;</code>, <code>&lt;textarea&gt;</code></li>
+        <li>Landmarks: <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code>, <code>&lt;aside&gt;</code>, <code>&lt;section&gt;</code></li>
+        <li>Anything with <code>role</code> or <code>aria-label</code></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</main>
+<script src="app.js"></script>
+</body>
+</html>

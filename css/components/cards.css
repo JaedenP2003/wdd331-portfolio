@@ -31,7 +31,8 @@
 
     &:has(#filter-1:checked) .card:not([data-unit="1"]),
     &:has(#filter-2:checked) .card:not([data-unit="2"]),
-    &:has(#filter-3:checked) .card:not([data-unit="3"]) {
+    &:has(#filter-3:checked) .card:not([data-unit="3"]),
+    &:has(#filter-4:checked) .card:not([data-unit="4"]) {
         display: none;
     }
 }

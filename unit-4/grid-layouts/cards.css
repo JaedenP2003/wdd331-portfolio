@@ -1,0 +1,54 @@
+/* Card grid: responsive columns, no media queries.
+   Tokens and base styles come from the shared css/main.css. */
+
+.articles-page {
+    header {
+        padding-block: var(--space-md);
+    }
+
+    /* Columns at least 240px wide that share leftover space equally.
+       min(100%, 240px) keeps the grid from overflowing on narrow screens. */
+    .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+        gap: var(--space-lg);
+    }
+
+    .card {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        padding: 0;
+        overflow: hidden;
+
+        /* Placeholder image area: fixed height */
+        > div:first-child {
+            height: 12rem;
+            background: linear-gradient(135deg, var(--accent-300), var(--accent-600));
+        }
+
+        /* display: contents removes this wrapper, so the heading, text and link
+           become flex items of the card itself. */
+        > div:last-child {
+            display: contents;
+        }
+
+        h2 {
+            margin-top: var(--space-md);
+            padding-inline: var(--space-md);
+            font-size: var(--font-size-lg);
+        }
+
+        p {
+            padding-inline: var(--space-md);
+            color: var(--color-text-muted);
+        }
+
+        /* margin-top: auto pushes the link to the bottom of every card,
+           however much text sits above it. */
+        a {
+            margin-top: auto;
+            padding: var(--space-md);
+        }
+    }
+}
