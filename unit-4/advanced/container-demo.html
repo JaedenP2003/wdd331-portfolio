@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Container Query Demo</title>
+    <script src="../../js/theme-preference.js"></script>
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="container-demo.css">
+</head>
+<body class="container-page">
+
+    <header>
+        <a href="../../index.html">&larr; Portfolio</a>
+        <h1>Container Query Demo</h1>
+        <p>The same course card in three different containers. It changes layout based on the width of the container it sits in, not the width of the screen.</p>
+    </header>
+
+    <main>
+
+        <div class="layout">
+
+            <aside>
+                <h2>Sidebar</h2>
+                <div class="slot">
+                    <article class="promo">
+                        <div class="promo-media" aria-hidden="true"></div>
+                        <div class="promo-body">
+                            <h3>Advanced CSS Layout</h3>
+                            <p>Grid, subgrid and container queries for components that adapt to where they live.</p>
+                            <a href="#">Start course</a>
+                        </div>
+                    </article>
+                </div>
+            </aside>
+
+            <section>
+                <h2>Main content</h2>
+                <div class="slot">
+                    <article class="promo">
+                        <div class="promo-media" aria-hidden="true"></div>
+                        <div class="promo-body">
+                            <h3>Advanced CSS Layout</h3>
+                            <p>Grid, subgrid and container queries for components that adapt to where they live.</p>
+                            <a href="#">Start course</a>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+        </div>
+
+        <section class="resize-section">
+            <h2>Resize it yourself</h2>
+            <p>Drag the bottom-right corner of the box. The card switches layouts at 420px and again at 640px of container width, with the screen size staying the same.</p>
+            <div class="slot slot--resizable">
+                <article class="promo">
+                    <div class="promo-media" aria-hidden="true"></div>
+                    <div class="promo-body">
+                        <h3>Advanced CSS Layout</h3>
+                        <p>Grid, subgrid and container queries for components that adapt to where they live.</p>
+                        <a href="#">Start course</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center text-muted">
+        <p>Container query demo for WDD 331R Advanced CSS.</p>
+    </footer>
+
+</body>
+</html>

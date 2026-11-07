@@ -15,6 +15,8 @@
     }
 
     .card {
+        --placeholder-height: 12rem;
+
         display: flex;
         flex-direction: column;
         gap: 0;
@@ -23,7 +25,7 @@
 
         /* Placeholder image area: fixed height */
         > div:first-child {
-            height: 12rem;
+            height: var(--placeholder-height);
             background: linear-gradient(135deg, var(--accent-300), var(--accent-600));
         }
 
@@ -44,11 +46,60 @@
             color: var(--color-text-muted);
         }
 
-        /* margin-top: auto pushes the link to the bottom of every card,
-           however much text sits above it. */
+        /* Fallback layout: margin-top: auto pushes the link to the bottom of
+           every card, however much text sits above it. */
         a {
             margin-top: auto;
             padding: var(--space-md);
+        }
+    }
+
+    /* Subgrid upgrade. Browsers without subgrid skip this block and keep the
+       flexbox cards above, which are still readable and still pin the link
+       to the bottom. */
+    @supports (grid-template-rows: subgrid) {
+        /* The parent defines three row tracks: title zone, body, footer.
+           The body track is 1fr so extra height goes there and the footers
+           line up at the bottom. Cards on later rows reuse the same pattern
+           through grid-auto-rows. */
+        .card-grid {
+            grid-template-rows: auto 1fr auto;
+            grid-auto-rows: auto 1fr auto;
+            align-items: stretch;   /* each card fills its three tracks */
+        }
+
+        .card {
+            display: grid;
+            grid-row: span 3;                /* span all three parent tracks */
+            grid-template-rows: subgrid;     /* inherit them instead of making new ones */
+            row-gap: 0;                      /* inherited gap would split the card;
+                                                the parent's row-gap still separates card rows */
+
+            /* Title zone: the image placeholder and the heading share row 1.
+               The heading is pushed below the fixed-height placeholder. */
+            > div:first-child {
+                grid-row: 1;
+                grid-column: 1;
+                align-self: start;
+            }
+
+            h2 {
+                grid-row: 1;
+                grid-column: 1;
+                align-self: start;
+                margin-top: calc(var(--placeholder-height) + var(--space-md));
+            }
+
+            p {
+                grid-row: 2;
+            }
+
+            a {
+                grid-row: 3;
+                align-self: end;
+                justify-self: start;
+                margin-top: 0;
+            }
         }
     }
 }

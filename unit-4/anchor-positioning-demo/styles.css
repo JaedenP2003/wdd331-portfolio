@@ -1,0 +1,331 @@
+/* =====================================================================
+   ANCHOR POSITIONING DEMO: styles.css
+   The first part of this file is the CSS shown in the video, in the same
+   order as the video. Look for the VIDEO banners. Everything under the
+   "SKIP ON CAMERA" banner is just layout and theming.
+   Tokens and base styles come from the shared css/main.css.
+   ===================================================================== */
+
+
+/* VIDEO 1:30 : Old way vs new way
+   ===================================================================== */
+
+/* Old way: JavaScript (app.js) measures the button and sets top and left */
+.old-tip {
+    position: absolute;
+}
+
+/* New way, step 1: name the anchor */
+.new-btn {
+    anchor-name: --new-btn;
+}
+
+/* New way, step 2: point the target at it, and place it */
+.new-tip {
+    position: absolute;
+    position-anchor: --new-btn;
+    position-area: top;
+    margin-bottom: var(--space-sm);
+}
+
+
+/* VIDEO 4:00 : The core pairing
+   ===================================================================== */
+.core-btn {
+    anchor-name: --core-btn;          /* dashed ident, unique per page */
+}
+
+.core-tip {
+    position: absolute;               /* required: absolute or fixed */
+    position-anchor: --core-btn;      /* which anchor to use */
+    position-area: top;               /* where, around the anchor */
+    margin-bottom: var(--space-sm);
+}
+
+
+/* VIDEO 6:00 : Method one, anchor()
+   ===================================================================== */
+.fn-btn {
+    anchor-name: --fn-btn;
+}
+
+.fn-tip {
+    position: absolute;
+    position-anchor: --fn-btn;
+    bottom: anchor(top);              /* my bottom edge = anchor's top edge */
+    left: anchor(center);             /* my left edge = anchor's center */
+    translate: -50% 0;                /* pull back by half my own width */
+    margin-bottom: var(--space-sm);
+}
+
+
+/* VIDEO 7:15 : Method two, position-area
+   ===================================================================== */
+.area-anchor {
+    anchor-name: --area-box;
+}
+
+.area-target {
+    position: absolute;
+    position-anchor: --area-box;
+    position-area: top;               /* changed by the radio buttons */
+}
+
+/* The radios change the value. :has() reads whichever one is checked. */
+.area-demo:has([value="top left"]:checked) .area-target { position-area: top left; }
+.area-demo:has([value="top"]:checked) .area-target { position-area: top; }
+.area-demo:has([value="top right"]:checked) .area-target { position-area: top right; }
+.area-demo:has([value="left"]:checked) .area-target { position-area: left; }
+.area-demo:has([value="center"]:checked) .area-target { position-area: center; }
+.area-demo:has([value="right"]:checked) .area-target { position-area: right; }
+.area-demo:has([value="bottom left"]:checked) .area-target { position-area: bottom left; }
+.area-demo:has([value="bottom"]:checked) .area-target { position-area: bottom; }
+.area-demo:has([value="bottom right"]:checked) .area-target { position-area: bottom right; }
+
+
+/* VIDEO 9:00 : Automatic repositioning
+   ===================================================================== */
+.drag-anchor {
+    anchor-name: --drag;
+}
+
+.drag-tip {
+    position: absolute;
+    position-anchor: --drag;
+    position-area: top;
+    margin-bottom: var(--space-sm);
+
+    /* Try these in order until one fits inside the stage */
+    position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline;
+}
+
+/* The checkbox turns the fallbacks off so you can show the tooltip breaking */
+.demo:has(#fallbacks-on:not(:checked)) .drag-tip {
+    position-try-fallbacks: none;
+}
+
+
+/* VIDEO 11:00 : Pairing with popover
+   ===================================================================== */
+.menu-btn {
+    anchor-name: --menu-btn;
+}
+
+.menu {
+    position-anchor: --menu-btn;
+    position-area: bottom span-right;   /* below the button, left edges lined up */
+    width: anchor-size(width);          /* same width as the button */
+    margin: 0;                          /* popovers have auto margins by default */
+    margin-block: var(--space-xs);
+    position-try-fallbacks: flip-block; /* open upward if there is no room below */
+}
+
+
+/* VIDEO 12:30 : Browser support check
+   ===================================================================== */
+.support-missing {
+    display: none;
+}
+
+@supports not (anchor-name: --test) {
+    .support-ok { display: none; }
+    .support-missing { display: block; }
+}
+
+
+/* =====================================================================
+   SKIP ON CAMERA: layout and theming
+   ===================================================================== */
+
+.anchor-demo {
+    nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-md);
+        margin-top: var(--space-md);
+    }
+
+    .support {
+        padding: var(--space-xs) var(--space-sm);
+        border-radius: var(--radius-md);
+        font-size: var(--font-size-sm);
+        width: fit-content;
+    }
+
+    .support-ok {
+        background: color-mix(in oklch, var(--color-accent) 20%, transparent);
+    }
+
+    .support-missing {
+        background: color-mix(in oklch, red 25%, transparent);
+    }
+
+    .demo {
+        margin-bottom: var(--space-xl);
+        padding-bottom: var(--space-lg);
+        border-bottom: 1px solid var(--color-border);
+
+        h3 {
+            margin-top: var(--space-lg);
+        }
+    }
+
+    .demo-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-xl);
+        padding: calc(var(--space-xl) + var(--space-md)) var(--space-xl) var(--space-md);
+    }
+
+    button {
+        font: inherit;
+        padding: var(--space-sm) var(--space-md);
+        background: var(--color-surface);
+        color: var(--color-text);
+        border: 1px solid var(--color-border-strong);
+        border-radius: var(--radius-md);
+        cursor: pointer;
+
+        &:hover {
+            border-color: var(--color-accent);
+        }
+
+        &:focus-visible {
+            outline: var(--outline-width) solid var(--color-focus);
+            outline-offset: 2px;
+        }
+    }
+
+    /* Shared tooltip look */
+    :is(.old-tip, .new-tip, .core-tip, .fn-tip, .area-target, .drag-tip) {
+        padding: var(--space-xs) var(--space-sm);
+        background: var(--color-text);
+        color: var(--color-bg);
+        border-radius: var(--radius-sm);
+        font-size: var(--font-size-sm);
+        width: max-content;
+        max-width: 28rem;
+        z-index: 1;
+    }
+
+    /* New-way and core tooltips show on hover or keyboard focus */
+    :is(.new-tip, .core-tip, .fn-tip) {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity var(--transition-base);
+    }
+
+    .new-btn:is(:hover, :focus-visible) + .new-tip,
+    .core-btn:is(:hover, :focus-visible) + .core-tip,
+    .fn-btn:is(:hover, :focus-visible) + .fn-tip {
+        opacity: 1;
+    }
+
+    /* position-area explorer */
+    .area-stage {
+        position: relative;
+        height: 28rem;
+        display: grid;
+        place-items: center;
+        border: 1px dashed var(--color-border-strong);
+        border-radius: var(--radius-lg);
+        background:
+            linear-gradient(var(--color-border) 1px, transparent 1px) 0 0 / 100% 33.333%,
+            transparent;
+    }
+
+    .area-anchor {
+        display: grid;
+        place-items: center;
+        width: 16rem;
+        height: 8rem;
+        background: color-mix(in oklch, var(--color-accent) 35%, var(--color-surface));
+        border: 2px solid var(--color-accent);
+        border-radius: var(--radius-md);
+        font-weight: 700;
+    }
+
+    .area-picker {
+        display: grid;
+        grid-template-columns: repeat(3, auto);
+        justify-content: start;
+        gap: var(--space-sm) var(--space-lg);
+        margin-top: var(--space-md);
+        padding: var(--space-md);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+
+        legend {
+            padding-inline: var(--space-xs);
+            font-family: monospace;
+        }
+    }
+
+    /* Drag stage */
+    .toggle {
+        display: inline-flex;
+        gap: var(--space-sm);
+        margin-bottom: var(--space-md);
+        font-family: monospace;
+    }
+
+    .drag-stage {
+        position: relative;
+        height: 32rem;
+        overflow: hidden;
+        border: 1px dashed var(--color-border-strong);
+        border-radius: var(--radius-lg);
+        touch-action: none;
+    }
+
+    .drag-anchor {
+        position: absolute;
+        left: 40%;
+        top: 50%;
+        padding: var(--space-sm) var(--space-md);
+        background: var(--color-accent);
+        color: var(--color-bg);
+        border-radius: var(--radius-md);
+        font-weight: 700;
+        cursor: grab;
+        user-select: none;
+
+        &:active {
+            cursor: grabbing;
+        }
+
+        &:focus-visible {
+            outline: var(--outline-width) solid var(--color-focus);
+            outline-offset: 2px;
+        }
+    }
+
+    /* Popover menu look */
+    .menu {
+        padding: var(--space-xs);
+        background: var(--color-surface);
+        color: var(--color-text);
+        border: 1px solid var(--color-border-strong);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-md);
+
+        ul {
+            display: grid;
+        }
+
+        a {
+            display: block;
+            padding: var(--space-sm);
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+
+            &:hover {
+                background: var(--color-border);
+            }
+        }
+    }
+
+    #popover {
+        padding-bottom: 40rem;
+    }
+}

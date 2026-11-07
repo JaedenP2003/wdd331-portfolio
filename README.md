@@ -23,6 +23,9 @@ every push to main.
 - [Editorial Layout](unit-4/grid-layouts/editorial.html)
 - [Card Grid](unit-4/grid-layouts/cards.html)
 - [display: contents Demo](unit-4/display-contents-demo/index.html)
+- [Container Query Demo](unit-4/advanced/container-demo.html)
+- [Sticky Demo](unit-4/advanced/sticky-demo.html)
+- [Anchor Positioning Demo](unit-4/anchor-positioning-demo/index.html)
 
 ## CSS Architecture
 

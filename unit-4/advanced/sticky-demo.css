@@ -1,0 +1,123 @@
+/* Sticky demo: a table of contents that follows the reader.
+   Tokens and base styles come from the shared css/main.css. */
+
+.sticky-page {
+    header {
+        display: grid;
+        gap: var(--space-sm);
+    }
+
+    .bug-toggle {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+        width: fit-content;
+        padding: var(--space-sm) var(--space-md);
+        background: var(--color-surface);
+        border: 1px solid var(--color-border-strong);
+        border-radius: var(--radius-md);
+    }
+
+    /* STICKY BUG AND FIX
+       Visual effect: the page wrapper has rounded corners and a gradient
+       banner at the top. The banner is square, so the wrapper has to clip it
+       to follow the rounded corners.
+
+       Bug: clipping with `overflow: hidden` turns .page-wrap into a scroll
+       container, even though it never scrolls. Sticky positions an element
+       against its nearest scrolling ancestor, so .toc was sticking to
+       .page-wrap (which never moves) instead of the viewport. It scrolled
+       away with the page and sticky looked broken.
+
+       Fix: `overflow: clip` clips the same way but does not create a scroll
+       container, so sticky goes back to using the viewport. The rounded
+       corners and banner look exactly the same. */
+    .page-wrap {
+        overflow: clip;
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+    }
+
+    /* The checkbox puts the bug back so you can see it. Uncheck it to restore the fix. */
+    &:has(#show-bug:checked) .page-wrap {
+        overflow: hidden;
+    }
+
+    .banner {
+        height: 8rem;
+        background: linear-gradient(135deg, var(--accent-300), var(--accent-700));
+    }
+
+    .layout {
+        display: grid;
+        grid-template-columns: 22rem minmax(0, 1fr);
+        gap: var(--space-xl);
+        padding: var(--space-lg);
+    }
+
+    /* The aside stretches the full height of the row. The sticky element
+       moves inside it, so it has room to travel. */
+    .toc {
+        position: sticky;
+        top: var(--sticky-offset);   /* without an offset, sticky does nothing */
+        padding: var(--space-md);
+        background: var(--color-bg);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+
+        h2 {
+            margin-bottom: var(--space-sm);
+            font-size: var(--font-size-lg);
+        }
+
+        ul {
+            display: grid;
+            gap: var(--space-xs);
+        }
+
+        a {
+            display: block;
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+
+            &:hover {
+                background: var(--color-border);
+            }
+
+            &:focus-visible {
+                outline: var(--outline-width) solid var(--color-focus);
+                outline-offset: 2px;
+            }
+        }
+    }
+
+    article {
+        section {
+            margin-bottom: var(--space-xl);
+        }
+
+        h2 {
+            margin-bottom: var(--space-sm);
+            /* Anchor links stop below the sticky offset instead of at the very top */
+            scroll-margin-top: var(--sticky-offset);
+        }
+
+        p {
+            max-width: 70ch;
+            margin-bottom: var(--space-md);
+        }
+    }
+
+    /* Small screens: stack the contents above the article and stop sticking */
+    @media (max-width: 700px) {
+        .layout {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        .toc {
+            position: static;
+        }
+    }
+}
