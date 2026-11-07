@@ -30,6 +30,9 @@
     /* Focus */
     --outline-width: 2px;
 
+    /* Sticky offset: distance from the top edge where sticky elements stop */
+    --sticky-offset: 24px;
+
     /* Shadows: layered stacks (ambient + key light). The colors come from
        --shadow-color / --shadow-color-soft in colors.css, so they adapt to dark mode. */
     --shadow-sm:

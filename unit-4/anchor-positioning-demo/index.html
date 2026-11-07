@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anchor Positioning Demo</title>
+    <script src="../../js/theme-preference.js"></script>
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="anchor-demo">
+
+    <header>
+        <h1>CSS Anchor Positioning Demo</h1>
+        <p class="text-muted">Tooltips and menus placed by CSS, with no positioning JavaScript.</p>
+        <p class="support support-ok">Your browser supports anchor positioning.</p>
+        <p class="support support-missing">Your browser does not support anchor positioning, so the demos below will not be placed correctly.</p>
+        <nav aria-label="Demo sections">
+            <a href="#old-new">1 Old vs new</a>
+            <a href="#core">2 Core pairing</a>
+            <a href="#methods">3 anchor() vs position-area</a>
+            <a href="#fallbacks">4 Fallbacks</a>
+            <a href="#popover">5 Popover</a>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- 1 -->
+        <section id="old-new" class="demo">
+            <h2>1. The old way and the new way</h2>
+            <p>Hover or focus each button. Both tooltips look the same, but only one needs JavaScript to be placed.</p>
+            <div class="demo-row">
+                <div>
+                    <button type="button" class="old-btn">Old way (JavaScript)</button>
+                    <div class="old-tip" role="tooltip" hidden>Positioned with getBoundingClientRect()</div>
+                </div>
+                <div>
+                    <button type="button" class="new-btn" aria-describedby="new-tip">New way (CSS)</button>
+                    <div class="new-tip" id="new-tip" role="tooltip">Positioned with anchor positioning</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2 -->
+        <section id="core" class="demo">
+            <h2>2. The core pairing</h2>
+            <p>One property names the anchor, one property on the target points at that name. The target must be absolute or fixed.</p>
+            <div class="demo-row">
+                <button type="button" class="core-btn" aria-describedby="core-tip">Hover me</button>
+                <div class="core-tip" id="core-tip" role="tooltip">I am anchored to the button</div>
+            </div>
+        </section>
+
+        <!-- 3 -->
+        <section id="methods" class="demo">
+            <h2>3. Two ways to place the target</h2>
+
+            <h3>anchor(): pick an exact edge</h3>
+            <p>The tooltip's bottom edge is pinned to the button's top edge, and its left edge to the button's center, then shifted back by half its own width.</p>
+            <div class="demo-row">
+                <button type="button" class="fn-btn" aria-describedby="fn-tip">anchor() tooltip</button>
+                <div class="fn-tip" id="fn-tip" role="tooltip">Centered with anchor(center)</div>
+            </div>
+
+            <h3>position-area: pick a cell of the 3 x 3 grid</h3>
+            <p>The anchor is the middle cell. Choose which of the nine areas the target sits in.</p>
+            <div class="area-demo">
+                <div class="area-stage">
+                    <div class="area-anchor">Anchor</div>
+                    <div class="area-target">Target</div>
+                </div>
+                <fieldset class="area-picker">
+                    <legend>position-area</legend>
+                    <label><input type="radio" name="area" value="top left"> top left</label>
+                    <label><input type="radio" name="area" value="top" checked> top</label>
+                    <label><input type="radio" name="area" value="top right"> top right</label>
+                    <label><input type="radio" name="area" value="left"> left</label>
+                    <label><input type="radio" name="area" value="center"> center</label>
+                    <label><input type="radio" name="area" value="right"> right</label>
+                    <label><input type="radio" name="area" value="bottom left"> bottom left</label>
+                    <label><input type="radio" name="area" value="bottom"> bottom</label>
+                    <label><input type="radio" name="area" value="bottom right"> bottom right</label>
+                </fieldset>
+            </div>
+        </section>
+
+        <!-- 4 -->
+        <section id="fallbacks" class="demo">
+            <h2>4. Automatic repositioning</h2>
+            <p>Drag the anchor into a corner. With fallbacks on, the tooltip flips to stay inside the box. With fallbacks off, it gets stuck on top of the anchor.</p>
+            <label class="toggle">
+                <input type="checkbox" id="fallbacks-on" checked>
+                position-try-fallbacks: on
+            </label>
+            <div class="drag-stage">
+                <div class="drag-anchor" tabindex="0" role="button" aria-label="Draggable anchor">Drag me</div>
+                <div class="drag-tip" role="tooltip">I flip when I run out of room</div>
+            </div>
+        </section>
+
+        <!-- 5 -->
+        <section id="popover" class="demo">
+            <h2>5. Pairing with the popover attribute</h2>
+            <p>The popover attribute handles the top layer and light dismiss. Anchor positioning handles where it appears, and anchor-size() makes it match the button's width. Scroll so the button is near the bottom of the window and open it to see it flip upward.</p>
+            <button type="button" class="menu-btn" popovertarget="menu">Options</button>
+            <div id="menu" class="menu" popover>
+                <ul>
+                    <li><a href="#popover">Profile</a></li>
+                    <li><a href="#popover">Settings</a></li>
+                    <li><a href="#popover">Sign out</a></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 6 -->
+        <section id="support" class="demo">
+            <h2>6. Browser support</h2>
+            <p>Anchor positioning reached Baseline in January 2026: Chrome and Edge 125+, Firefox 147+, Safari 26. Behavior around overflow and fallbacks still differs a little between browsers, so test in more than one.</p>
+        </section>
+
+    </main>
+
+    <footer class="text-center text-muted">
+        <p>Anchor positioning demo for WDD 331R Advanced CSS.</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

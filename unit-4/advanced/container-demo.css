@@ -1,0 +1,156 @@
+/* Container query demo.
+   The component adapts to the width of its container, not the viewport.
+   No media queries and no JavaScript are used for the component's behavior.
+   Tokens and base styles come from the shared css/main.css. */
+
+.container-page {
+    header {
+        display: grid;
+        gap: var(--space-sm);
+    }
+
+    /* Page layout: flex-wrap stacks the columns on small screens
+       without a media query. */
+    .layout {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: var(--space-lg);
+
+        > aside {
+            flex: 1 1 24rem;
+            max-width: 32rem;
+        }
+
+        > section {
+            flex: 3 1 48rem;
+            min-width: 0;
+        }
+    }
+
+    .resize-section {
+        margin-top: var(--space-xl);
+    }
+
+    h2 {
+        margin-bottom: var(--space-sm);
+    }
+
+    /* The wrapper is the containment context. @container rules below
+       can only query an ancestor like this, never the component itself. */
+    .slot {
+        container-type: inline-size;
+        container-name: slot;
+    }
+
+    .slot--resizable {
+        width: 50rem;
+        min-width: 18rem;
+        max-width: 100%;
+        resize: horizontal;
+        overflow: hidden;
+        padding: var(--space-sm);
+        border: 2px dashed var(--color-border-strong);
+        border-radius: var(--radius-lg);
+    }
+}
+
+/* The component. Default (narrowest) layout: stacked vertically. */
+.promo {
+    display: grid;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+
+    .promo-media {
+        position: relative;
+        aspect-ratio: 16 / 9;
+        background: linear-gradient(135deg, var(--accent-300), var(--accent-600));
+
+        /* Label showing which layout is active */
+        &::after {
+            content: "stacked";
+            position: absolute;
+            inset: auto auto var(--space-sm) var(--space-sm);
+            padding: var(--space-xs) var(--space-sm);
+            background: var(--color-bg);
+            color: var(--color-text);
+            border-radius: var(--radius-sm);
+            font-size: var(--font-size-sm);
+            font-family: var(--font-family-mono);
+        }
+    }
+
+    .promo-body {
+        display: grid;
+        align-content: start;
+        gap: var(--space-sm);
+        padding: var(--space-md);
+
+        h3 {
+            /* cqi is 1% of the container's width, so the heading scales with it */
+            font-size: clamp(var(--font-size-md), 5cqi, 2.8rem);
+        }
+
+        p {
+            margin: 0;
+            color: var(--color-text-muted);
+        }
+
+        a {
+            justify-self: start;
+            padding: var(--space-sm) var(--space-md);
+            background: var(--color-accent);
+            color: var(--color-bg);
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            font-weight: 700;
+
+            &:hover {
+                background: var(--color-accent-hover);
+            }
+
+            &:focus-visible {
+                outline: var(--outline-width) solid var(--color-focus);
+                outline-offset: 2px;
+            }
+        }
+    }
+}
+
+/* Selectors below repeat ".promo" so they have the same specificity as the
+   nested defaults above. Otherwise the defaults would win. */
+
+/* Container wider than 420px: image on the left, text on the right. */
+@container slot (min-width: 420px) {
+    .promo {
+        grid-template-columns: 16rem 1fr;
+    }
+
+    .promo .promo-media {
+        aspect-ratio: auto;
+        min-height: 100%;
+    }
+
+    .promo .promo-media::after {
+        content: "horizontal";
+    }
+}
+
+/* Container wider than 640px: bigger image and roomier text. */
+@container slot (min-width: 640px) {
+    .promo {
+        grid-template-columns: 24rem 1fr;
+    }
+
+    .promo .promo-media::after {
+        content: "horizontal, roomy";
+    }
+
+    .promo .promo-body {
+        padding: var(--space-lg);
+        gap: var(--space-md);
+    }
+}

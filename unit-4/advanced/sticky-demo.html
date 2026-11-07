@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sticky Table of Contents Demo</title>
+    <script src="../../js/theme-preference.js"></script>
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="sticky-demo.css">
+</head>
+<body class="sticky-page">
+
+    <header>
+        <a href="../../index.html">&larr; Portfolio</a>
+        <h1>Sticky Table of Contents</h1>
+        <p>Scroll the page. The contents list stays in view beside the article.</p>
+        <label class="bug-toggle">
+            <input type="checkbox" id="show-bug">
+            Reproduce the bug: put <code>overflow: hidden</code> on the wrapper
+        </label>
+    </header>
+
+    <main>
+        <div class="page-wrap">
+            <div class="banner" aria-hidden="true"></div>
+
+            <div class="layout">
+
+                <aside>
+                    <nav class="toc" aria-label="On this page">
+                        <h2>Contents</h2>
+                        <ul>
+                            <li><a href="#why-layout">Why layout matters</a></li>
+                            <li><a href="#grid">Grid</a></li>
+                            <li><a href="#subgrid">Subgrid</a></li>
+                            <li><a href="#container">Container queries</a></li>
+                            <li><a href="#sticky">Sticky positioning</a></li>
+                            <li><a href="#choosing">Choosing a tool</a></li>
+                        </ul>
+                    </nav>
+                </aside>
+
+                <article>
+                    <section id="why-layout">
+                        <h2>Why layout matters</h2>
+                        <p>Layout is the skeleton of every page. When it works, nobody notices it. When it does not, headings collide with images, buttons drift away from the text they belong to, and readers lose their place. Modern CSS gives us tools that describe relationships between elements instead of pixel positions.</p>
+                        <p>The goal of this page is not to teach every tool. It is long on purpose, so there is something to scroll past while the table of contents stays put on the left.</p>
+                    </section>
+
+                    <section id="grid">
+                        <h2>Grid</h2>
+                        <p>CSS Grid lays out content in two dimensions at once. You define rows and columns, then place items into them, or let the browser place them automatically. It is the right tool when the rows and columns need to relate to each other.</p>
+                        <p>Functions like repeat() and minmax() let a grid decide how many columns fit. Paired with auto-fit, a single line of CSS can replace several media queries and still behave well on a phone.</p>
+                    </section>
+
+                    <section id="subgrid">
+                        <h2>Subgrid</h2>
+                        <p>A grid item can be a grid itself, but by default its tracks are independent from the parent. That is why card titles, text and buttons drift out of alignment when the content differs in length.</p>
+                        <p>Subgrid lets a child adopt the parent's tracks. Every card in a row then shares the same title row, body row and footer row, so everything lines up no matter how much text each card holds.</p>
+                    </section>
+
+                    <section id="container">
+                        <h2>Container queries</h2>
+                        <p>Media queries ask how wide the screen is. A component often needs to know how wide its own space is. The same card might sit in a narrow sidebar on one page and a wide content area on another.</p>
+                        <p>With container-type on a wrapper, a component can respond to the wrapper's width with an @container rule. The component becomes portable, because it no longer depends on where it is placed.</p>
+                    </section>
+
+                    <section id="sticky">
+                        <h2>Sticky positioning</h2>
+                        <p>An element with position: sticky behaves like a normal element until it would scroll past an offset, such as top: 24px. From then on it holds that position inside its container. A table of contents, a section header or a sidebar are common uses.</p>
+                        <p>Sticky depends on its ancestors. If a parent has overflow set to anything other than visible, that parent becomes the element's scrolling container, and the sticking happens inside it instead of in the page. The checkbox at the top of this page reproduces that bug.</p>
+                    </section>
+
+                    <section id="choosing">
+                        <h2>Choosing a tool</h2>
+                        <p>Use Flexbox when items sit in one row or column and their sizes come from their content. Use Grid when rows and columns need to line up. Use subgrid when nested items must share the parent's lines. Use container queries when a component should adapt to its space, and media queries for decisions about the whole page.</p>
+                        <p>Most real layouts use several of these together. The skill is picking the simplest tool that describes the relationship you want.</p>
+                    </section>
+                </article>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="text-center text-muted">
+        <p>Sticky demo for WDD 331R Advanced CSS.</p>
+    </footer>
+
+</body>
+</html>
