@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Font Subsetting Demo</title>
+    <script src="../../js/theme-preference.js"></script>
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="font-demo">
+
+    <header>
+        <a href="../../index.html">Back to portfolio</a>
+        <h1>Font Subsetting Demo</h1>
+        <p class="text-muted">Inter, an open-source variable font, cut down to the characters a page actually needs.</p>
+        <nav aria-label="Demo pages">
+            <a href="before.html">Before</a>
+            <a href="after.html">After</a>
+            <a href="loading.html">FOIT vs FOUT</a>
+        </nav>
+    </header>
+
+    <main>
+
+        <h2>1. What each file costs</h2>
+        <p>These are real file sizes from the subsets built by <code>build-fonts.py</code>. Latin is always needed for an English site. Toggle the other scripts to see what an average page would be paying for.</p>
+
+        <div class="panel">
+            <table>
+                <thead>
+                    <tr><th scope="col">Include</th><th scope="col">File</th><th scope="col">Size</th></tr>
+                </thead>
+                <tbody id="rows"></tbody>
+            </table>
+            <p class="size-total" id="total" aria-live="polite">Loading sizes...</p>
+            <p class="text-muted" id="compare"></p>
+            <div class="bar" aria-hidden="true"><span id="bar"></span></div>
+        </div>
+
+        <h2>2. Static subsetting</h2>
+        <p>The files were built ahead of time with <code>pyftsubset</code>, part of the fonttools toolkit. Each script gets its own range of Unicode code points:</p>
+        <div class="panel"><code>python -m fontTools.subset Inter-Variable.ttf --unicodes="U+0000-00FF,U+0131,U+0152-0153,U+2000-206F" --flavor=woff2 --output-file=Inter-latin.woff2</code></div>
+        <p>The same ranges go into <code>unicode-range</code> in <code>after.css</code>, so the browser only downloads the files a page needs.</p>
+
+        <h2>3. See it in the network panel</h2>
+        <ul>
+            <li><a href="before.html">Before</a>: one request for the full font.</li>
+            <li><a href="after.html">After</a>: one request for the Latin subset. Use the buttons to pull in Russian or Greek text and watch those files download on demand.</li>
+            <li><a href="loading.html">FOIT vs FOUT</a>: the same font loading slowly, with and without the subset.</li>
+        </ul>
+    </main>
+
+    <footer class="text-center text-muted">
+        <p>Font subsetting demo for WDD 331R Advanced CSS. Inter is licensed under the SIL Open Font License.</p>
+    </footer>
+
+    <script>
+        const FILES = [
+            { key: 'latin', label: 'Inter-latin.woff2 (Latin, always on)', locked: true },
+            { key: 'latin-ext', label: 'Inter-latin-ext.woff2 (Latin Extended)' },
+            { key: 'greek', label: 'Inter-greek.woff2 (Greek)' },
+            { key: 'cyrillic', label: 'Inter-cyrillic.woff2 (Cyrillic)' }
+        ];
+        const kb = (bytes) => (bytes / 1024).toFixed(1) + ' KB';
+
+        fetch('sizes.json')
+            .then((response) => response.json())
+            .then((sizes) => {
+                const rows = document.getElementById('rows');
+                FILES.forEach((file) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td><input type="checkbox" id="c-${file.key}" ${file.locked ? 'checked disabled' : ''}></td>
+                        <td><label for="c-${file.key}">${file.label}</label></td>
+                        <td>${kb(sizes[file.key])}</td>`;
+                    rows.appendChild(row);
+                });
+                const update = () => {
+                    const total = FILES.reduce((sum, file) =>
+                        sum + (document.getElementById('c-' + file.key).checked ? sizes[file.key] : 0), 0);
+                    const saved = Math.round((1 - total / sizes.full) * 100);
+                    document.getElementById('total').textContent = 'Your page downloads: ' + kb(total);
+                    document.getElementById('compare').textContent =
+                        'The full font is ' + kb(sizes.full) + '. That is ' + saved + '% smaller.';
+                    document.getElementById('bar').style.width = Math.round((total / sizes.full) * 100) + '%';
+                };
+                rows.addEventListener('change', update);
+                update();
+            })
+            .catch(() => {
+                document.getElementById('total').textContent =
+                    'Could not load sizes.json. Open this page through a web server, not as a file.';
+            });
+    </script>
+
+</body>
+</html>

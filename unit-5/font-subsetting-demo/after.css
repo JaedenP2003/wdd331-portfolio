@@ -1,0 +1,41 @@
+/* AFTER: one @font-face per subset, all under the same font-family name.
+   unicode-range tells the browser which characters each file provides.
+   It only downloads a file when the page contains a character in its range,
+   so an English page downloads just the Latin file. */
+
+@font-face {
+    font-family: "Inter Demo";
+    src: url("fonts/Inter-latin.woff2") format("woff2");
+    font-weight: 100 900;
+    font-display: swap;
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F;
+}
+
+@font-face {
+    font-family: "Inter Demo";
+    src: url("fonts/Inter-latin-ext.woff2") format("woff2");
+    font-weight: 100 900;
+    font-display: swap;
+    unicode-range: U+0100-02AF, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+    font-family: "Inter Demo";
+    src: url("fonts/Inter-greek.woff2") format("woff2");
+    font-weight: 100 900;
+    font-display: swap;
+    unicode-range: U+0370-03FF;
+}
+
+@font-face {
+    font-family: "Inter Demo";
+    src: url("fonts/Inter-cyrillic.woff2") format("woff2");
+    font-weight: 100 900;
+    font-display: swap;
+    unicode-range: U+0400-045F, U+0490-0491;
+}
+
+/* Point the shared site font token at the web font */
+:root {
+    --font-family-sans: "Inter Demo", system-ui, sans-serif;
+}

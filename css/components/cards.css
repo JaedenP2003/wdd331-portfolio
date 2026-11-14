@@ -32,7 +32,8 @@
     &:has(#filter-1:checked) .card:not([data-unit="1"]),
     &:has(#filter-2:checked) .card:not([data-unit="2"]),
     &:has(#filter-3:checked) .card:not([data-unit="3"]),
-    &:has(#filter-4:checked) .card:not([data-unit="4"]) {
+    &:has(#filter-4:checked) .card:not([data-unit="4"]),
+    &:has(#filter-5:checked) .card:not([data-unit="5"]) {
         display: none;
     }
 }
@@ -65,14 +66,14 @@
 
     .card-tag {
         align-self: flex-start;
-        font-size: var(--font-size-small);
+        font-size: var(--font-size-caption);
         text-transform: uppercase;
         letter-spacing: 0.05em;
         color: var(--color-accent);
     }
 
     h3 {
-        font-size: var(--font-size-lg);
+        font-size: var(--font-size-heading-sm);
     }
 
     /* Stretch the link so the whole card is clickable. */

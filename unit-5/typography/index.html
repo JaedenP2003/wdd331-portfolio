@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typography Tokens</title>
+    <script src="../../js/theme-preference.js"></script>
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="typography.css">
+</head>
+<body class="type-page">
+
+    <header>
+        <a href="../../index.html">Back to portfolio</a>
+        <h1>Typography Tokens</h1>
+        <p class="text-muted">A major-third modular scale, fluid from 320px to 1200px, mapped to semantic roles. Resize the window and watch the numbers change.</p>
+        <p class="viewport" aria-live="off">Viewport: <span id="vw"></span> px</p>
+    </header>
+
+    <main>
+
+        <section>
+            <h2>The scale</h2>
+            <p>Each step is the one before times 1.25. The small steps stay fixed. The large steps use <code>clamp()</code> with a linear preferred value, so each one is exactly its minimum at 320px and its maximum at 1200px.</p>
+            <table>
+                <thead>
+                    <tr><th scope="col">Token</th><th scope="col">Behavior</th><th scope="col">Now</th><th scope="col">Sample</th></tr>
+                </thead>
+                <tbody>
+                    <tr><th scope="row">--font-size-xs</th><td>fixed</td><td class="px" data-step="xs"></td><td><span class="s-xs">Hyrule Castle</span></td></tr>
+                    <tr><th scope="row">--font-size-sm</th><td>fixed</td><td class="px" data-step="sm"></td><td><span class="s-sm">Hyrule Castle</span></td></tr>
+                    <tr><th scope="row">--font-size-md</th><td>fixed</td><td class="px" data-step="md"></td><td><span class="s-md">Hyrule Castle</span></td></tr>
+                    <tr><th scope="row">--font-size-lg</th><td>fixed</td><td class="px" data-step="lg"></td><td><span class="s-lg">Hyrule Castle</span></td></tr>
+                    <tr><th scope="row">--font-size-xl</th><td>fluid 23 to 25px</td><td class="px" data-step="xl"></td><td><span class="s-xl">Hyrule Castle</span></td></tr>
+                    <tr><th scope="row">--font-size-2xl</th><td>fluid 28 to 31px</td><td class="px" data-step="2xl"></td><td><span class="s-2xl">Hyrule Castle</span></td></tr>
+                    <tr><th scope="row">--font-size-3xl</th><td>fluid 33 to 39px</td><td class="px" data-step="3xl"></td><td><span class="s-3xl">Hyrule Castle</span></td></tr>
+                    <tr><th scope="row">--font-size-4xl</th><td>fluid 40 to 49px</td><td class="px" data-step="4xl"></td><td><span class="s-4xl">Hyrule Castle</span></td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>Roles</h2>
+            <p>Components never use a step directly. They use a role, and each role points at one step.</p>
+            <div class="roles">
+                <div class="role">
+                    <p class="label"><code>--font-size-display</code> = 4xl, display font</p>
+                    <p class="r-display">The Master Sword</p>
+                </div>
+                <div class="role">
+                    <p class="label"><code>--font-size-heading-lg</code> = 3xl, heading font</p>
+                    <p class="r-heading-lg">Temple of Time</p>
+                </div>
+                <div class="role">
+                    <p class="label"><code>--font-size-heading-sm</code> = xl, heading font</p>
+                    <p class="r-heading-sm">Lost Woods</p>
+                </div>
+                <div class="role">
+                    <p class="label"><code>--font-size-body</code> = md, system font</p>
+                    <p>Body text uses the system font stack at 16px with an open line height, so long passages stay easy to read at every width.</p>
+                </div>
+                <div class="role">
+                    <p class="label"><code>--font-size-caption</code> = sm, system font</p>
+                    <p class="r-caption">Caption text for notes and supporting details.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Fonts</h2>
+            <ul>
+                <li><strong>Display:</strong> The Wild Breath of Zelda, self-hosted Latin subset (10 KB).</li>
+                <li><strong>Headings:</strong> Triforce, self-hosted Latin subset (19 KB).</li>
+                <li><strong>Body and captions:</strong> the system font stack.</li>
+                <li><strong>Loading:</strong> <code>font-display: swap</code>. The fallback serif shows right away and swaps when the font arrives.</li>
+            </ul>
+            <p class="r-caption text-muted">Fonts downloaded from zeldauniverse.net.</p>
+        </section>
+
+    </main>
+
+    <footer class="text-center text-muted">
+        <p>Typography tokens for WDD 331R Advanced CSS.</p>
+    </footer>
+
+    <script>
+        /* Show the live computed size of each step and the viewport width */
+        const update = () => {
+            document.getElementById('vw').textContent = window.innerWidth;
+            document.querySelectorAll('.px').forEach((cell) => {
+                const sample = cell.parentElement.querySelector('span');
+                cell.textContent = parseFloat(getComputedStyle(sample).fontSize).toFixed(1) + ' px';
+            });
+        };
+        window.addEventListener('resize', update);
+        update();
+    </script>
+
+</body>
+</html>

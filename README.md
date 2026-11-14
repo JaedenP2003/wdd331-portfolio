@@ -26,6 +26,8 @@ every push to main.
 - [Container Query Demo](unit-4/advanced/container-demo.html)
 - [Sticky Demo](unit-4/advanced/sticky-demo.html)
 - [Anchor Positioning Demo](unit-4/anchor-positioning-demo/index.html)
+- [Typography Tokens](unit-5/typography/index.html)
+- [Font Subsetting Demo](unit-5/font-subsetting-demo/index.html)
 
 ## CSS Architecture
 
@@ -73,6 +75,15 @@ All color tokens live in `css/tokens/colors.css`:
 - **Semantic tokens:** `--color-bg`, `--color-text`, `--color-accent` and
   others use `light-dark()` so one declaration covers both modes.
   Components should only use these semantic tokens.  
+
+## Typography
+
+All type tokens live in `css/tokens/variables.css`, and the `@font-face` rules are in `css/main.css`.
+
+- **Scale:** a major-third (1.25) modular scale with eight steps, `--font-size-xs` to `--font-size-4xl`, based on 16px. The small steps (xs to lg) are fixed. The large steps (xl to 4xl) are fluid with `clamp()`, growing from a gentler 1.2 ratio at 320px wide to the full 1.25 ratio at 1200px wide.
+- **Roles:** components use semantic roles, never steps directly: `--font-size-body`, `--font-size-lead`, `--font-size-caption`, `--font-size-heading-sm`, `--font-size-heading-lg` and `--font-size-display`. Changing the hierarchy means changing which step a role points at.
+- **Fonts:** two self-hosted Latin subsets in `fonts/`: The Wild Breath of Zelda for the display role (`--font-family-display`) and Triforce for headings (`--font-family-heading`). Body text uses the system stack (`--font-family-body`). Both use `font-display: swap` with a serif fallback stack. Fonts were downloaded from zeldauniverse.net.
+- **Specimen:** [Typography Tokens](unit-5/typography/index.html) shows every step and role, with live sizes as the window resizes.
 
 ## Visual Effects
 

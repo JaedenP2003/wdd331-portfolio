@@ -1,0 +1,129 @@
+/* Shared demo styles. Tokens and base styles come from the shared css/main.css. */
+
+.font-demo {
+    nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-md);
+        margin-top: var(--space-md);
+    }
+
+    h2 {
+        margin-top: var(--space-xl);
+        margin-bottom: var(--space-sm);
+    }
+
+    p, li {
+        max-width: 70ch;
+    }
+
+    ul {
+        display: grid;
+        gap: var(--space-xs);
+        padding-inline-start: var(--space-lg);
+        list-style: disc;
+    }
+
+    code {
+        font-family: var(--font-family-mono);
+        font-size: 0.95em;
+        padding: 0 var(--space-xs);
+        background: var(--color-surface);
+        border-radius: var(--radius-sm);
+    }
+
+    .panel {
+        margin-top: var(--space-md);
+        padding: var(--space-md);
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+    }
+
+    button {
+        font: inherit;
+        padding: var(--space-sm) var(--space-md);
+        background: var(--color-surface);
+        color: var(--color-text);
+        border: 1px solid var(--color-border-strong);
+        border-radius: var(--radius-md);
+        cursor: pointer;
+
+        &:hover {
+            border-color: var(--color-accent);
+        }
+
+        &:focus-visible {
+            outline: var(--outline-width) solid var(--color-focus);
+            outline-offset: 2px;
+        }
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        max-width: 70rem;
+
+        th, td {
+            padding: var(--space-sm);
+            text-align: start;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        td:last-child, th:last-child {
+            text-align: end;
+            font-variant-numeric: tabular-nums;
+        }
+    }
+
+    .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-sm);
+        margin-top: var(--space-md);
+    }
+
+    .size-total {
+        margin-top: var(--space-md);
+        font-size: var(--font-size-lg);
+        font-weight: 700;
+    }
+
+    .bar {
+        height: 1.2rem;
+        margin-top: var(--space-sm);
+        background: var(--color-border);
+        border-radius: 999px;
+        overflow: hidden;
+
+        > span {
+            display: block;
+            height: 100%;
+            width: 100%;
+            background: var(--color-accent);
+            transition: width var(--transition-base);
+        }
+    }
+
+    /* FOIT vs FOUT columns */
+    .compare {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr));
+        gap: var(--space-lg);
+    }
+
+    .sample {
+        font-size: 2.4rem;
+        line-height: 1.3;
+
+        &.block { font-family: "Demo Block", serif; }
+        &.swap { font-family: "Demo Swap", serif; }
+    }
+
+    .timer {
+        margin-top: var(--space-sm);
+        font-family: var(--font-family-mono);
+        font-size: var(--font-size-sm);
+        color: var(--color-text-muted);
+    }
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Font Subsetting: After</title>
+    <script src="../../js/theme-preference.js"></script>
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="after.css">
+</head>
+<body class="font-demo">
+
+    <header>
+        <a href="index.html">Back to the font subsetting demo</a>
+        <h1>After: subset fonts with unicode-range</h1>
+        <p class="text-muted">The same font, split into one file per script. This page only downloads <code>Inter-latin.woff2</code>.</p>
+        <nav aria-label="Demo pages">
+            <a href="before.html">Before</a>
+            <a href="after.html" aria-current="page">After</a>
+            <a href="loading.html">FOIT vs FOUT</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>An English page</h2>
+        <p>Everything you are reading uses a small fraction of the characters inside this font. The page only needs the letters, numbers and punctuation of ordinary English, plus a few accented characters like café, résumé and naïve.</p>
+
+        <h2>What the browser downloads</h2>
+        <ul>
+            <li>One font request, for the Latin subset only.</li>
+            <li>Greek, Cyrillic and Latin Extended files are declared, but the browser skips them because no character on the page falls in their <code>unicode-range</code>.</li>
+            <li>Same font, same look. Only the unused glyphs are gone.</li>
+        </ul>
+
+        <h2>Watch unicode-range work</h2>
+        <p>Keep the network panel open, filtered to Font. Then add text from another script. The browser requests the matching file at that moment, and only then.</p>
+        <div class="actions">
+            <button type="button" id="add-cyrillic">Add Russian text</button>
+            <button type="button" id="add-greek">Add Greek text</button>
+        </div>
+        <div class="panel" id="extra-text" aria-live="polite">No extra text yet.</div>
+    </main>
+
+    <footer class="text-center text-muted">
+        <p>Font subsetting demo for WDD 331R Advanced CSS.</p>
+    </footer>
+
+    <script>
+        const extra = document.getElementById('extra-text');
+        document.getElementById('add-cyrillic').addEventListener('click', () => {
+            extra.textContent = 'Привет, мир. Шрифт загружается только тогда, когда он нужен.';
+        });
+        document.getElementById('add-greek').addEventListener('click', () => {
+            extra.textContent = 'Γειά σου, κόσμε. Η γραμματοσειρά φορτώνεται μόνο όταν χρειάζεται.';
+        });
+    </script>
+
+</body>
+</html>

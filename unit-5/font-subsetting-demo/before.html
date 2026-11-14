@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Font Subsetting: Before</title>
+    <script src="../../js/theme-preference.js"></script>
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="before.css">
+</head>
+<body class="font-demo">
+
+    <header>
+        <a href="index.html">Back to the font subsetting demo</a>
+        <h1>Before: the full font</h1>
+        <p class="text-muted">This page loads <code>Inter-full.woff2</code>, the whole font, for English text.</p>
+        <nav aria-label="Demo pages">
+            <a href="before.html" aria-current="page">Before</a>
+            <a href="after.html">After</a>
+            <a href="loading.html">FOIT vs FOUT</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>An English page</h2>
+        <p>Everything you are reading uses a small fraction of the characters inside this font. The page only needs the letters, numbers and punctuation of ordinary English, plus a few accented characters like café, résumé and naïve.</p>
+
+        <h2>What the browser downloads</h2>
+        <ul>
+            <li>One font request, for the complete file.</li>
+            <li>Latin, Latin Extended, Greek and Cyrillic glyphs, even though none of this page's text needs the last three.</li>
+            <li>Hinting and layout data for every one of those glyphs.</li>
+        </ul>
+
+        <h2>Try it</h2>
+        <p>Open the browser's network panel, filter to Font, turn on Disable cache, and reload. Note the size of the single font request, then open the After page and compare.</p>
+    </main>
+
+    <footer class="text-center text-muted">
+        <p>Font subsetting demo for WDD 331R Advanced CSS.</p>
+    </footer>
+
+</body>
+</html>
