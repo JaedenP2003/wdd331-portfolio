@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Font Subsetting: FOIT vs FOUT</title>
+    <script src="../../js/theme-preference.js"></script>
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="styles.css">
+    <!-- The @font-face rules are added by the script at the bottom of the page,
+         so you can choose which file loads with the buttons. -->
+    <style id="font-rules"></style>
+</head>
+<body class="font-demo">
+
+    <header>
+        <a href="index.html">Back to the font subsetting demo</a>
+        <h1>FOIT vs FOUT</h1>
+        <p class="text-muted">Same font, two <code>font-display</code> values, loading slowly on purpose.</p>
+        <nav aria-label="Demo pages">
+            <a href="before.html">Before</a>
+            <a href="after.html">After</a>
+            <a href="loading.html" aria-current="page">FOIT vs FOUT</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>1. Pick a file, then reload</h2>
+        <p>Run <code>node server.js 150</code> from this folder first. That serves the fonts at 150 KB/s so the download takes a visible amount of time. Then choose which file to load.</p>
+        <div class="actions">
+            <button type="button" data-font="full">Load the full font</button>
+            <button type="button" data-font="latin">Load the Latin subset</button>
+        </div>
+        <p class="timer" id="which">Loading: <span id="which-name"></span></p>
+
+        <h2>2. Watch the two columns</h2>
+        <div class="compare">
+            <section>
+                <h3><code>font-display: block</code> (FOIT)</h3>
+                <p class="sample block">The quick brown fox jumps over the lazy dog.</p>
+                <p class="timer" id="block-timer">Waiting...</p>
+            </section>
+            <section>
+                <h3><code>font-display: swap</code> (FOUT)</h3>
+                <p class="sample swap">The quick brown fox jumps over the lazy dog.</p>
+                <p class="timer" id="swap-timer">Waiting...</p>
+            </section>
+        </div>
+
+        <h2>What you should see</h2>
+        <ul>
+            <li><strong>Block:</strong> the text is invisible while the font downloads. That is the flash of invisible text.</li>
+            <li><strong>Swap:</strong> the text shows right away in a fallback serif font, then jumps to the web font when it arrives. That is the flash of unstyled text.</li>
+            <li><strong>Smaller file:</strong> load the Latin subset and both windows get shorter, because the file finishes downloading sooner.</li>
+        </ul>
+    </main>
+
+    <footer class="text-center text-muted">
+        <p>Font subsetting demo for WDD 331R Advanced CSS.</p>
+    </footer>
+
+    <script>
+        const FILES = {
+            full: 'fonts/Inter-full.woff2',
+            latin: 'fonts/Inter-latin.woff2'
+        };
+        const params = new URLSearchParams(location.search);
+        const choice = FILES[params.get('font')] ? params.get('font') : 'full';
+        document.getElementById('which-name').textContent = FILES[choice];
+
+        /* Two font families from the same file. The different query strings keep the
+           browser from sharing one request between them, so each one gets its own timer. */
+        document.getElementById('font-rules').textContent = `
+            @font-face {
+                font-family: "Demo Block";
+                src: url("${FILES[choice]}?block") format("woff2");
+                font-weight: 100 900;
+                font-display: block;
+            }
+            @font-face {
+                font-family: "Demo Swap";
+                src: url("${FILES[choice]}?swap") format("woff2");
+                font-weight: 100 900;
+                font-display: swap;
+            }`;
+
+        const start = performance.now();
+        const report = (family, timerId) => {
+            document.fonts.load(`24px "${family}"`).then(() => {
+                const ms = Math.round(performance.now() - start);
+                document.getElementById(timerId).textContent = `Web font ready after ${ms} ms`;
+            });
+        };
+        report('Demo Block', 'block-timer');
+        report('Demo Swap', 'swap-timer');
+
+        document.querySelectorAll('[data-font]').forEach((button) => {
+            button.addEventListener('click', () => {
+                location.search = '?font=' + button.dataset.font;
+            });
+        });
+    </script>
+
+</body>
+</html>

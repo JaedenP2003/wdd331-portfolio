@@ -1,12 +1,48 @@
 /* Non-color tokens: spacing, typography, radius, shadow and effect stacks. */
 :root {
-    /* Typography */
-    --font-family-sans: system-ui, sans-serif;
+    /* Typography: font families.
+       Heading and display faces are self-hosted subsets (see @font-face in main.css).
+       Each stack ends in a system font so text stays readable before the web font
+       loads, or if it fails. */
+    --font-family-body: system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-family-heading: "Triforce", Georgia, "Times New Roman", serif;
+    --font-family-display: "Wild Breath of Zelda", "Triforce", Georgia, "Times New Roman", serif;
     --font-family-mono: monospace;
-    --font-size-sm: 1.4rem;
-    --font-size-md: 1.6rem;
-    --font-size-lg: 1.8rem;
-    --line-height-base: 1.6;
+
+    /* Typography: modular scale, major third (ratio 1.25), base 16px (1.6rem).
+       Each step is the one before it times 1.25, so md = 16px, lg = 20px, xl = 25px...
+       Steps are named by position. Roles (below) decide what each step is used for. */
+
+    /* Small steps stay fixed: supporting text should not grow with the window */
+    --font-size-xs: 1.024rem;   /* 16 / 1.25^2 = 10.24px */
+    --font-size-sm: 1.28rem;    /* 16 / 1.25   = 12.8px  */
+    --font-size-md: 1.6rem;     /* 16px, the body size   */
+    --font-size-lg: 2rem;       /* 16 x 1.25   = 20px    */
+
+    /* Large steps are fluid: clamp(min, intercept + slope x viewport, max).
+       Min is the step at 320px wide, using a gentler 1.2 ratio so phones are not
+       overwhelmed. Max is the full major-third step at 1200px wide.
+       slope     = (max - min) / (1200 - 320)         per px, shown as vw (x 100)
+       intercept = min - slope x 320                  shown in rem
+       so each step is exactly its min at 320px and its max at 1200px. */
+    --font-size-xl: clamp(2.304rem, 2.2327rem + 0.2227vw, 2.5rem);     /* 23.04px -> 25px    */
+    --font-size-2xl: clamp(2.765rem, 2.6338rem + 0.4093vw, 3.125rem);  /* 27.65px -> 31.25px */
+    --font-size-3xl: clamp(3.318rem, 3.1038rem + 0.6687vw, 3.906rem);  /* 33.18px -> 39.06px */
+    --font-size-4xl: clamp(3.981rem, 3.6535rem + 1.0244vw, 4.883rem); /* 39.81px -> 48.83px */
+
+    /* Line heights: open for reading, tighter as sizes grow so wrapped headings hold together */
+    --line-height-body: 1.6;
+    --line-height-heading: 1.25;
+    --line-height-display: 1.1;
+
+    /* Semantic roles: components use these names, never the steps directly.
+       To change the hierarchy, change which step a role points at. */
+    --font-size-body: var(--font-size-md);
+    --font-size-lead: var(--font-size-lg);
+    --font-size-caption: var(--font-size-sm);
+    --font-size-heading-sm: var(--font-size-xl);
+    --font-size-heading-lg: var(--font-size-3xl);
+    --font-size-display: var(--font-size-4xl);
 
     /* Spacing */
     --space-xs: 4px;
@@ -69,8 +105,10 @@
         drop-shadow(0 8px 8px var(--shadow-color));
 
     /* Legacy names: point at the tokens above so older rules keep working */
-    --font-family: var(--font-family-sans);
-    --font-size-base: var(--font-size-md);
-    --font-size-small: var(--font-size-sm);
+    --font-family-sans: var(--font-family-body);
+    --font-family: var(--font-family-body);
+    --font-size-base: var(--font-size-body);
+    --font-size-small: var(--font-size-caption);
+    --line-height-base: var(--line-height-body);
     --radius: var(--radius-md);
 }

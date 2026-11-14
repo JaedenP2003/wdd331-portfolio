@@ -1,20 +1,37 @@
-/* Base element styles: bare HTML selectors only, no classes. */
+/* Base element styles: bare HTML selectors only, no classes.
+   Sizes come from the semantic role tokens in tokens/variables.css. */
 
 body {
-    font-family: var(--font-family);
-    font-size: var(--font-size-base);
-    line-height: var(--line-height-base);
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-body);
     color: var(--color-text);
     background-color: var(--color-background);
 }
 
-:where(h1, h2, h3) {
-    line-height: 1.2;
+:where(h1, h2, h3, h4, h5, h6) {
+    font-family: var(--font-family-heading);
+    font-weight: 400;   /* the heading fonts have one weight, so no faux bold */
+    line-height: var(--line-height-heading);
 }
 
 h1 {
-    font-size: clamp(2.8rem, 1.9rem + 2.5vw, 4.4rem);
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-display);
+    line-height: var(--line-height-display);
     color: var(--color-primary);
+}
+
+h2 {
+    font-size: var(--font-size-heading-lg);
+}
+
+h3 {
+    font-size: var(--font-size-heading-sm);
+}
+
+:where(small, figcaption, footer) {
+    font-size: var(--font-size-caption);
 }
 
 a {

@@ -1,0 +1,15 @@
+/* BEFORE: one @font-face pointing at the full font.
+   Every character the font has (Latin, Latin Extended, Greek, Cyrillic,
+   symbols, hinting data...) downloads, even though this page is English only. */
+
+@font-face {
+    font-family: "Inter Demo";
+    src: url("fonts/Inter-full.woff2") format("woff2");
+    font-weight: 100 900;
+    font-display: swap;
+}
+
+/* Point the shared site font token at the web font */
+:root {
+    --font-family-sans: "Inter Demo", system-ui, sans-serif;
+}

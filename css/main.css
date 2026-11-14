@@ -19,3 +19,27 @@
 
 /* Utilities */
 @import url('utilities/utilities.css') layer(utilities);
+
+/* Web fonts: self-hosted Latin subsets of two Zelda-style display fonts.
+   Paths are relative to this file (css/) and also work from dist/styles.css,
+   because both folders sit one level below the fonts/ folder.
+   font-display: swap shows the fallback serif at once, then swaps when the font
+   arrives. These files are 10 KB and 19 KB, so the swap window is short, and
+   headings stay readable even if the fonts never load.
+   Fonts downloaded from zeldauniverse.net. The Wild Breath of Zelda is by
+   Chequered Ink; Triforce has no author listed in its file. */
+@font-face {
+    font-family: "Wild Breath of Zelda";
+    src: url("../fonts/wild-breath-of-zelda.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Triforce";
+    src: url("../fonts/triforce.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}

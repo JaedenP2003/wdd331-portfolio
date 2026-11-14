@@ -1,0 +1,116 @@
+/* Typography specimen page.
+   Each sample uses a type token. Page-local rules only add layout. */
+
+.type-page {
+    .viewport {
+        width: fit-content;
+        padding: var(--space-xs) var(--space-sm);
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        font-family: var(--font-family-mono);
+        font-size: var(--font-size-caption);
+    }
+
+    section {
+        margin-top: var(--space-xl);
+    }
+
+    p, li {
+        max-width: 70ch;
+    }
+
+    ul {
+        display: grid;
+        gap: var(--space-sm);
+    }
+
+    code {
+        font-family: var(--font-family-mono);
+        font-size: 0.9em;
+        padding: 0 var(--space-xs);
+        background: var(--color-surface);
+        border-radius: var(--radius-sm);
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+
+        th, td {
+            padding: var(--space-sm);
+            text-align: start;
+            vertical-align: baseline;
+            border-bottom: 1px solid var(--color-border);
+            font-family: var(--font-family-body);
+            font-size: var(--font-size-caption);
+            font-weight: 400;
+        }
+
+        td:nth-child(3) {
+            font-variant-numeric: tabular-nums;
+            white-space: nowrap;
+        }
+
+        td:nth-child(4) span {
+            font-family: var(--font-family-heading);
+            line-height: var(--line-height-heading);
+        }
+    }
+
+    /* One sample per scale step */
+    .s-xs { font-size: var(--font-size-xs); }
+    .s-sm { font-size: var(--font-size-sm); }
+    .s-md { font-size: var(--font-size-md); }
+    .s-lg { font-size: var(--font-size-lg); }
+    .s-xl { font-size: var(--font-size-xl); }
+    .s-2xl { font-size: var(--font-size-2xl); }
+    .s-3xl { font-size: var(--font-size-3xl); }
+    .s-4xl { font-size: var(--font-size-4xl); }
+
+    /* One sample per role */
+    .roles {
+        display: grid;
+        gap: var(--space-md);
+    }
+
+    .role {
+        padding: var(--space-md);
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+
+        .label {
+            margin-bottom: var(--space-xs);
+            font-size: var(--font-size-caption);
+            color: var(--color-text-muted);
+        }
+
+        p {
+            margin: 0;
+        }
+    }
+
+    .r-display {
+        font-family: var(--font-family-display);
+        font-size: var(--font-size-display);
+        line-height: var(--line-height-display);
+        color: var(--color-primary);
+    }
+
+    .r-heading-lg {
+        font-family: var(--font-family-heading);
+        font-size: var(--font-size-heading-lg);
+        line-height: var(--line-height-heading);
+    }
+
+    .r-heading-sm {
+        font-family: var(--font-family-heading);
+        font-size: var(--font-size-heading-sm);
+        line-height: var(--line-height-heading);
+    }
+
+    .r-caption {
+        font-size: var(--font-size-caption);
+    }
+}
