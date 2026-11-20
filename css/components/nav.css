@@ -1,4 +1,6 @@
-/* Site navigation component */
+/* Site navigation component: brand, a short link list, a Projects dropdown
+   and the theme toggle. The dropdown is a native popover placed with CSS
+   anchor positioning, so it needs no JavaScript. */
 
 .site-nav {
     display: flex;
@@ -9,16 +11,18 @@
     padding: var(--space-sm) var(--space-md);
     background: var(--color-surface);
     border: 1px solid var(--color-border);
-    border-radius: var(--radius);
+    border-radius: var(--radius-md);
 
     .brand {
         font-weight: 700;
         color: var(--color-text);
     }
 
-    ul {
+    /* Only the main link list, not the lists inside the dropdown */
+    > ul {
         display: flex;
         flex-wrap: wrap;
+        align-items: center;
         gap: var(--space-md);
     }
 
@@ -33,6 +37,99 @@
         &:focus-visible {
             outline: 3px solid var(--color-focus);
             outline-offset: 3px;
+        }
+    }
+
+    /* The Projects button looks like a nav link with a small chevron */
+    .projects-btn {
+        anchor-name: --projects-btn;   /* the dropdown attaches to this */
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-xs);
+        padding: 0;
+        background: none;
+        color: var(--color-link);
+        font-weight: 400;
+
+        &:hover {
+            background: none;
+            color: var(--color-link-hover);
+        }
+
+        &::after {
+            content: "";
+            width: 0.6rem;
+            height: 0.6rem;
+            border-right: 2px solid currentColor;
+            border-bottom: 2px solid currentColor;
+            transform: translateY(-2px) rotate(45deg);
+            transition: transform var(--transition-base);
+        }
+
+        &:has(+ .projects-menu:popover-open)::after {
+            transform: translateY(1px) rotate(-135deg);
+        }
+
+        &:focus-visible {
+            outline: 3px solid var(--color-focus);
+            outline-offset: 3px;
+        }
+    }
+
+    .projects-menu {
+        position-anchor: --projects-btn;
+        position-area: bottom span-right;   /* under the button, left edges lined up */
+        position-try-fallbacks: flip-inline, flip-block, flip-block flip-inline;
+        width: min(72rem, calc(100vw - 2 * var(--space-md)));
+        margin: var(--space-sm) 0 0;        /* popovers have auto margins by default */
+        padding: var(--space-md);
+        background: var(--color-surface);
+        color: var(--color-text);
+        border: 1px solid var(--color-border-strong);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-md);
+
+        &:popover-open {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+            gap: var(--space-md) var(--space-lg);
+        }
+
+        .unit-label {
+            margin: 0 0 var(--space-xs);
+            color: var(--color-accent);
+            font-size: var(--font-size-caption);
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        ul {
+            display: grid;
+            gap: var(--space-xs);
+        }
+
+        a {
+            display: block;
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--radius-sm);
+
+            &:hover {
+                background: var(--color-border);
+            }
+        }
+    }
+
+    /* Small screens: there is no room to sit beside the button, so the menu
+       spans the width of the screen just under the nav */
+    @media (max-width: 760px) {
+        .projects-menu {
+            position-area: none;
+            inset-inline: var(--space-sm);
+            top: calc(anchor(bottom) + var(--space-sm));
+            width: auto;
+            max-height: 70dvh;
+            overflow-y: auto;
         }
     }
 }

@@ -71,6 +71,7 @@ html {
     --theme-toggle-bg: color-mix(in srgb, var(--header-text) 15%, transparent);
     --theme-toggle-border: color-mix(in srgb, var(--header-text) 35%, transparent);
     --theme-toggle-bg-hover: color-mix(in srgb, var(--header-text) 25%, transparent);
+    --theme-toggle-border-hover: color-mix(in srgb, var(--header-text) 55%, transparent);
 
     /* Shadows: stronger in dark mode. The layered --shadow-sm / --shadow-md
        stacks live in variables.css and are built from these two colors. */
@@ -92,8 +93,4 @@ html {
     --icon-outline: light-dark(oklch(1 0 0), oklch(0.15 0.02 225));
 
     --blend-tint: light-dark(var(--accent-600), var(--accent-500));
-
-    /* Legacy names: point at the tokens above so older rules keep working */
-    --color-background: var(--color-bg);
-    --color-primary: var(--color-accent);
 }

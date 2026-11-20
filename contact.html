@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jaeden Platt - Contact</title>
+    <script src="js/theme-preference.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body class="contact-page">
+
+    <nav class="site-nav" aria-label="Main">
+        <span class="brand">Jaeden Platt</span>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li>
+                <button type="button" class="projects-btn" popovertarget="projects-menu">Projects</button>
+                <div id="projects-menu" class="projects-menu" popover>
+                    <div class="unit">
+                        <p class="unit-label" id="u1">Unit 1</p>
+                        <ul aria-labelledby="u1">
+                            <li><a href="unit-1/custom-properties/index.html">Custom Properties and Nesting</a></li>
+                            <li><a href="unit-1/choose-topic/demo.html">nth-child() Demo</a></li>
+                        </ul>
+                    </div>
+                    <div class="unit">
+                        <p class="unit-label" id="u2">Unit 2</p>
+                        <ul aria-labelledby="u2">
+                            <li><a href="unit-2/layered-components/index.html">Layered Components</a></li>
+                            <li><a href="unit-2/lightning-css-demo/index.html">Lightning CSS Demo</a></li>
+                        </ul>
+                    </div>
+                    <div class="unit">
+                        <p class="unit-label" id="u3">Unit 3</p>
+                        <ul aria-labelledby="u3">
+                            <li><a href="unit-3/visual-effects/index.html">Visual Effects</a></li>
+                            <li><a href="unit-3/blend-modes-demo/index.html">Blend Modes Demo</a></li>
+                        </ul>
+                    </div>
+                    <div class="unit">
+                        <p class="unit-label" id="u4">Unit 4</p>
+                        <ul aria-labelledby="u4">
+                            <li><a href="unit-4/grid-layouts/editorial.html">Editorial Layout</a></li>
+                            <li><a href="unit-4/grid-layouts/cards.html">Card Grid</a></li>
+                            <li><a href="unit-4/display-contents-demo/index.html">display: contents Demo</a></li>
+                            <li><a href="unit-4/advanced/container-demo.html">Container Query Demo</a></li>
+                            <li><a href="unit-4/advanced/sticky-demo.html">Sticky Demo</a></li>
+                            <li><a href="unit-4/anchor-positioning-demo/index.html">Anchor Positioning Demo</a></li>
+                        </ul>
+                    </div>
+                    <div class="unit">
+                        <p class="unit-label" id="u5">Unit 5</p>
+                        <ul aria-labelledby="u5">
+                            <li><a href="unit-5/typography/index.html">Typography Tokens</a></li>
+                            <li><a href="unit-5/font-subsetting-demo/index.html">Font Subsetting Demo</a></li>
+                            <li><a href="unit-5/interpolate-size/index.html">interpolate-size Demo</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+            <li><a href="resume.html">Resume</a></li>
+            <li><a href="contact.html" aria-current="page">Contact</a></li>
+        </ul>
+        <details class="theme-menu">
+            <summary class="theme-control">
+                <span class="visually-hidden">Color scheme</span>
+            </summary>
+            <div class="theme-extra" role="group" aria-label="Choose color scheme">
+                <label class="theme-control theme-pick" data-theme-pick="light">
+                    <input name="theme-preference" type="radio" value="light">
+                    <span aria-hidden="true">&#9788;&#65039;</span>
+                    <span class="visually-hidden">Light</span>
+                </label>
+                <label class="theme-control theme-pick" data-theme-pick="system">
+                    <input name="theme-preference" type="radio" value="system" checked>
+                    <span aria-hidden="true">&#9881;&#65039;</span>
+                    <span class="visually-hidden">System default</span>
+                </label>
+                <label class="theme-control theme-pick" data-theme-pick="dark">
+                    <input name="theme-preference" type="radio" value="dark">
+                    <span aria-hidden="true">&#127766;</span>
+                    <span class="visually-hidden">Dark</span>
+                </label>
+            </div>
+        </details>
+    </nav>
+
+    <header>
+        <h1>Contact</h1>
+        <p class="text-muted">Questions about a project, or want to work together? Send me a message.</p>
+    </header>
+
+    <main>
+        <form class="contact-form" action="#" method="post" aria-labelledby="form-heading">
+            <h2 id="form-heading">Send a message</h2>
+            <p class="hint" id="required-note">All fields are required except the checkbox.</p>
+
+            <div class="field">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" autocomplete="name" required>
+            </div>
+
+            <div class="field">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" autocomplete="email" required aria-describedby="email-hint">
+                <p class="hint" id="email-hint">I'll only use this to reply to you.</p>
+            </div>
+
+            <div class="field">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="5" required></textarea>
+            </div>
+
+            <div class="check">
+                <input type="checkbox" id="subscribe" name="subscribe">
+                <label for="subscribe">Send me occasional updates about new projects</label>
+            </div>
+
+            <button type="submit">Send message</button>
+            <p id="form-status" role="status"></p>
+        </form>
+    </main>
+
+    <footer class="text-center text-muted">
+        <p>Contact form for WDD 331R Advanced CSS. It is a demo, so messages are not sent anywhere.</p>
+    </footer>
+
+    <script>
+        /* The form is a stub: show a confirmation instead of submitting */
+        const form = document.querySelector('.contact-form');
+        const status = document.getElementById('form-status');
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            status.textContent = 'Thanks! This is a demo form, so nothing was sent.';
+            form.reset();
+        });
+    </script>
+
+</body>
+</html>

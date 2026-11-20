@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jaeden Platt - Resume</title>
+    <script src="js/theme-preference.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body class="resume-page">
+
+    <nav class="site-nav" aria-label="Main">
+        <span class="brand">Jaeden Platt</span>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li>
+                <button type="button" class="projects-btn" popovertarget="projects-menu">Projects</button>
+                <div id="projects-menu" class="projects-menu" popover>
+                    <div class="unit">
+                        <p class="unit-label" id="u1">Unit 1</p>
+                        <ul aria-labelledby="u1">
+                            <li><a href="unit-1/custom-properties/index.html">Custom Properties and Nesting</a></li>
+                            <li><a href="unit-1/choose-topic/demo.html">nth-child() Demo</a></li>
+                        </ul>
+                    </div>
+                    <div class="unit">
+                        <p class="unit-label" id="u2">Unit 2</p>
+                        <ul aria-labelledby="u2">
+                            <li><a href="unit-2/layered-components/index.html">Layered Components</a></li>
+                            <li><a href="unit-2/lightning-css-demo/index.html">Lightning CSS Demo</a></li>
+                        </ul>
+                    </div>
+                    <div class="unit">
+                        <p class="unit-label" id="u3">Unit 3</p>
+                        <ul aria-labelledby="u3">
+                            <li><a href="unit-3/visual-effects/index.html">Visual Effects</a></li>
+                            <li><a href="unit-3/blend-modes-demo/index.html">Blend Modes Demo</a></li>
+                        </ul>
+                    </div>
+                    <div class="unit">
+                        <p class="unit-label" id="u4">Unit 4</p>
+                        <ul aria-labelledby="u4">
+                            <li><a href="unit-4/grid-layouts/editorial.html">Editorial Layout</a></li>
+                            <li><a href="unit-4/grid-layouts/cards.html">Card Grid</a></li>
+                            <li><a href="unit-4/display-contents-demo/index.html">display: contents Demo</a></li>
+                            <li><a href="unit-4/advanced/container-demo.html">Container Query Demo</a></li>
+                            <li><a href="unit-4/advanced/sticky-demo.html">Sticky Demo</a></li>
+                            <li><a href="unit-4/anchor-positioning-demo/index.html">Anchor Positioning Demo</a></li>
+                        </ul>
+                    </div>
+                    <div class="unit">
+                        <p class="unit-label" id="u5">Unit 5</p>
+                        <ul aria-labelledby="u5">
+                            <li><a href="unit-5/typography/index.html">Typography Tokens</a></li>
+                            <li><a href="unit-5/font-subsetting-demo/index.html">Font Subsetting Demo</a></li>
+                            <li><a href="unit-5/interpolate-size/index.html">interpolate-size Demo</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+            <li><a href="resume.html" aria-current="page">Resume</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <details class="theme-menu">
+            <summary class="theme-control">
+                <span class="visually-hidden">Color scheme</span>
+            </summary>
+            <div class="theme-extra" role="group" aria-label="Choose color scheme">
+                <label class="theme-control theme-pick" data-theme-pick="light">
+                    <input name="theme-preference" type="radio" value="light">
+                    <span aria-hidden="true">&#9788;&#65039;</span>
+                    <span class="visually-hidden">Light</span>
+                </label>
+                <label class="theme-control theme-pick" data-theme-pick="system">
+                    <input name="theme-preference" type="radio" value="system" checked>
+                    <span aria-hidden="true">&#9881;&#65039;</span>
+                    <span class="visually-hidden">System default</span>
+                </label>
+                <label class="theme-control theme-pick" data-theme-pick="dark">
+                    <input name="theme-preference" type="radio" value="dark">
+                    <span aria-hidden="true">&#127766;</span>
+                    <span class="visually-hidden">Dark</span>
+                </label>
+            </div>
+        </details>
+    </nav>
+
+    <header class="resume-header">
+        <h1>Jaeden Platt</h1>
+        <ul class="resume-links">
+            <li><a href="https://www.linkedin.com/in/jaeden-platt">linkedin.com/in/jaeden-platt</a></li>
+            <li><a href="https://github.com/JaedenP2003">github.com/JaedenP2003</a></li>
+            <li class="no-print"><a href="contact.html">Send me a message</a></li>
+        </ul>
+    </header>
+
+    <main class="resume">
+
+        <!-- Summary is for the screen version. The printed resume matches the
+             one-page PDF, which has no summary. -->
+        <section class="no-print" aria-labelledby="summary-heading">
+            <h2 id="summary-heading">Summary</h2>
+            <p>Software Engineering student at Brigham Young University Idaho with hands-on experience building features for a utility billing platform, supporting Microsoft 365 and Google users in a university IT department, and creating web projects with HTML, CSS, JavaScript and Python.</p>
+        </section>
+
+        <section aria-labelledby="education-heading">
+            <h2 id="education-heading">Education</h2>
+            <article class="entry entry--date-top">
+                <h3>Bachelor of Science in Software Engineering</h3>
+                <p class="meta"><span>Brigham Young University Idaho</span> <time datetime="2027-07">Anticipated July 2027</time></p>
+                <ul>
+                    <li>Relevant Course Work: SQL, Cybersecurity, Programming with Functions, Programming with Classes, Web Frontend Development, C Language</li>
+                </ul>
+            </article>
+        </section>
+
+        <section aria-labelledby="internship-heading">
+            <h2 id="internship-heading">Internship</h2>
+            <article class="entry">
+                <h3>Software Engineer</h3>
+                <p class="meta"><span>Madison Technologies</span> <time datetime="2026-07">July 2026 - Present</time></p>
+                <ul>
+                    <li>Direct Claude Code through detailed prompts to build and update features for a utility billing platform, covering payments, billing and fees</li>
+                    <li>Test the application end to end, using demo data and sandbox payments to catch bugs</li>
+                    <li>Gather requirements from the product owner and report progress to them while coordinating database changes and releases to production with documented steps and backups</li>
+                </ul>
+            </article>
+        </section>
+
+        <section aria-labelledby="projects-heading">
+            <h2 id="projects-heading">Personal Projects</h2>
+            <article class="entry">
+                <h3>Zelda Informer <span class="stack">(HTML, CSS, JavaScript)</span></h3>
+                <ul>
+                    <li>Designed a dynamic website about the series <em>The Legend of Zelda</em></li>
+                    <li>Used HTML and CSS to create the layout of the site</li>
+                    <li>Utilized JavaScript to make the site dynamic and user accessible</li>
+                </ul>
+            </article>
+            <article class="entry">
+                <h3>CYOA <span class="stack">(Python, Flask)</span></h3>
+                <ul>
+                    <li>Led a team in creating a Choose Your Own Adventure college story showcasing Python functions</li>
+                    <li>Used Flask to dynamically render on a web page</li>
+                </ul>
+            </article>
+        </section>
+
+        <section aria-labelledby="experience-heading">
+            <h2 id="experience-heading">Professional Experience</h2>
+            <article class="entry">
+                <h3>Assistant Application Systems Engineer</h3>
+                <p class="meta"><span>Brigham Young University Idaho - IT Department</span> <time datetime="2026-01">January 2026 - Present</time></p>
+                <ul>
+                    <li>Offer Tier 3 technical support for users, troubleshooting Google, Microsoft 365, and Zoom issues using written and verbal communication</li>
+                    <li>Administer user accounts, permissions, and groups using Microsoft 365</li>
+                    <li>Documented incidents, solutions, and procedures while following ITIL-based ticketing processes</li>
+                </ul>
+            </article>
+            <article class="entry">
+                <h3>Package Handler</h3>
+                <p class="meta"><span>United Parcel Service</span> <time datetime="2024-08">August 2024 - January 2026</time></p>
+                <ul>
+                    <li>Loaded and unloaded several packages from trailers in a fast-paced environment</li>
+                    <li>Functioned as part of a small team to confront several important operational goals</li>
+                    <li>Maintained efficient workflows by organizing packages and prioritizing tasks to meet time and productivity targets</li>
+                </ul>
+            </article>
+        </section>
+
+        <section aria-labelledby="skills-heading">
+            <h2 id="skills-heading">Skills</h2>
+            <ul class="skills">
+                <li>Microsoft Office</li>
+                <li>Python</li>
+                <li>C Language</li>
+                <li>C#</li>
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+                <li>SQL</li>
+            </ul>
+        </section>
+
+    </main>
+
+    <footer class="text-center text-muted">
+        <p>Resume for Jaeden Platt. Built for WDD 331R Advanced CSS.</p>
+    </footer>
+
+</body>
+</html>

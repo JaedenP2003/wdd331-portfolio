@@ -16,9 +16,12 @@
 @import url('components/cards.css') layer(components);
 @import url('components/theme-toggle.css') layer(components);
 @import url('components/effects.css') layer(components);
+@import url('components/resume.css') layer(components);
+@import url('components/forms.css') layer(components);
 
 /* Utilities */
 @import url('utilities/utilities.css') layer(utilities);
+@import url('print.css') layer(utilities);
 
 /* Web fonts: self-hosted Latin subsets of two Zelda-style display fonts.
    Paths are relative to this file (css/) and also work from dist/styles.css,

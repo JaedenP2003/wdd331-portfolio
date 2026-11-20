@@ -95,7 +95,7 @@
         font-family: var(--font-family-display);
         font-size: var(--font-size-display);
         line-height: var(--line-height-display);
-        color: var(--color-primary);
+        color: var(--color-accent);
     }
 
     .r-heading-lg {

@@ -6,7 +6,7 @@ body {
     font-size: var(--font-size-body);
     line-height: var(--line-height-body);
     color: var(--color-text);
-    background-color: var(--color-background);
+    background-color: var(--color-bg);
 }
 
 :where(h1, h2, h3, h4, h5, h6) {
@@ -19,7 +19,7 @@ h1 {
     font-family: var(--font-family-display);
     font-size: var(--font-size-display);
     line-height: var(--line-height-display);
-    color: var(--color-primary);
+    color: var(--color-accent);
 }
 
 h2 {
@@ -44,4 +44,49 @@ a {
 
 ul {
     list-style: none;
+}
+
+/* Form controls: inherit the page font (browsers default to their own),
+   one consistent look, and a visible keyboard focus ring.
+   :where() keeps these at zero specificity so components override them easily. */
+:where(input:not([type="checkbox"], [type="radio"]), textarea, select) {
+    width: 100%;
+    padding: var(--space-sm) var(--space-md);
+    background: var(--color-bg);
+    color: var(--color-text);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+}
+
+:where(input, textarea, select, button) {
+    font: inherit;
+
+    &:focus-visible {
+        outline: var(--outline-width) solid var(--color-focus);
+        outline-offset: 2px;
+    }
+}
+
+/* The message box grows with its content where field-sizing is supported
+   (Chrome, Edge, Safari 26.2+). Elsewhere it stays at the rows attribute size.
+   min-height and max-height keep it from collapsing or taking over the page. */
+textarea {
+    field-sizing: content;
+    min-height: 12rem;
+    max-height: 32rem;
+    resize: vertical;
+}
+
+:where(button) {
+    padding: var(--space-sm) var(--space-lg);
+    background: var(--color-accent);
+    color: var(--color-bg);
+    border: 0;
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    cursor: pointer;
+
+    &:hover {
+        background: var(--color-accent-hover);
+    }
 }
