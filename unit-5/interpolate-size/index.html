@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>interpolate-size Demo</title>
+    <script src="../../js/theme-preference.js"></script>
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="interpolate-page">
+
+    <header>
+        <a href="../../index.html">Back to portfolio</a>
+        <h1>interpolate-size Demo</h1>
+        <p class="text-muted">Animating an element from a fixed height to <code>auto</code>, with plain CSS.</p>
+        <p class="support support-yes">Your browser supports <code>interpolate-size</code>.</p>
+        <p class="support support-no">Your browser does not support <code>interpolate-size</code>. The panels still open and close, just instantly.</p>
+    </header>
+
+    <main>
+
+        <!-- Controls -->
+        <section class="controls" aria-labelledby="controls-heading">
+            <h2 id="controls-heading">Controls</h2>
+            <div class="control-row">
+                <label class="toggle">
+                    <input type="checkbox" id="opt-in" checked>
+                    <code>interpolate-size: allow-keywords</code>
+                </label>
+                <label class="toggle">
+                    <input type="checkbox" id="enhance" checked>
+                    animate the <code>::details-content</code> box
+                </label>
+                <label class="toggle">
+                    Speed
+                    <select id="speed">
+                        <option value="0.35s" selected>Normal (0.35s)</option>
+                        <option value="1.5s">Slow motion (1.5s)</option>
+                        <option value="3s">Very slow (3s)</option>
+                    </select>
+                </label>
+            </div>
+            <p class="text-muted">Untick the first box and open a panel: it jumps. Tick it again: the same panel slides. Untick the second box to see the plain course pattern, which opens with a jump and snaps shut in newer Chrome.</p>
+        </section>
+
+        <!-- Accordion: the demo from the course page -->
+        <section aria-labelledby="accordion-heading">
+            <h2 id="accordion-heading">The animated accordion</h2>
+            <p>Native <code>details</code> and <code>summary</code> elements. The browser handles open and closed state. CSS handles the animation. There is no JavaScript here.</p>
+
+            <div class="accordion">
+
+                <details>
+                    <summary>The interpolate-size property</summary>
+                    <div class="panel">
+                        <div class="panel-content">
+                            <p>CSS can only animate between two concrete values. A height of <code>auto</code> is not a number, it is an instruction to work out the height from the content, so the browser has no midpoint to calculate. The property <code>interpolate-size</code> lets the browser resolve keywords like <code>auto</code>, <code>min-content</code> and <code>max-content</code> to real numbers before animating.</p>
+                            <p>You opt in with <code>interpolate-size: allow-keywords</code>, and the usual place to set it is on <code>:root</code>, because the property inherits and every element on the page then gets the behavior.</p>
+                        </div>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Why max-height is a poor fit</summary>
+                    <div class="panel">
+                        <div class="panel-content">
+                            <p>The old workaround animates <code>max-height</code> to a large number, because a number can be interpolated. The trouble is that the number is a guess. If the content is 150px tall but you animate to 1000px, the panel is fully open after about 15 percent of the time, then nothing visible happens for the rest of the transition.</p>
+                            <p>Easing suffers too. The curve is applied to the whole 1000px distance, not the 150px that is actually visible, so the motion feels wrong. Closing is worse, because the panel waits before it starts to shrink.</p>
+                        </div>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>JavaScript and progressive enhancement</summary>
+                    <div class="panel">
+                        <div class="panel-content">
+                            <p>This pattern is built in layers. Native <code>details</code> gives you open and closed state in every browser. CSS adds the animation where it is supported. In a browser without <code>interpolate-size</code>, the panels still work and simply open instantly.</p>
+                            <p>If you need the animation everywhere, a small script can measure the panel's <code>scrollHeight</code> and set a pixel height. Wrap it in <code>CSS.supports()</code> so it only runs where the property is missing, otherwise the inline height would fight the CSS.</p>
+                        </div>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Respecting prefers-reduced-motion</summary>
+                    <div class="panel">
+                        <div class="panel-content">
+                            <p>Some people get dizzy or distracted by motion, and they say so with an operating system setting. The <code>prefers-reduced-motion: reduce</code> media query lets the page listen. In this demo it turns off the height transition and the arrow rotation, so the panels open instantly for those visitors.</p>
+                            <p>It is a small block of CSS, and it belongs in every animated disclosure pattern.</p>
+                        </div>
+                    </div>
+                </details>
+
+            </div>
+        </section>
+
+        <!-- Why max-height stalls -->
+        <section aria-labelledby="compare-heading">
+            <h2 id="compare-heading">height: auto versus max-height</h2>
+            <p>Same content in both panels. Slow the speed down in the controls and open them one at a time.</p>
+
+            <div class="compare">
+                <div>
+                    <h3><code>max-height: 100rem</code></h3>
+                    <details class="cmp-max">
+                        <summary>Open the max-height panel</summary>
+                        <div class="panel-content">
+                            <p>This content is only about 100px tall, but the transition travels toward 1000px. The panel is fully open long before the animation ends, so it looks like a quick pop followed by a pause. On closing, it hovers at full size before it starts to shrink.</p>
+                        </div>
+                    </details>
+                </div>
+                <div>
+                    <h3><code>height: auto</code></h3>
+                    <details class="cmp-auto">
+                        <summary>Open the height: auto panel</summary>
+                        <div class="panel-content">
+                            <p>This content is only about 100px tall, and the transition travels exactly 100px, from zero to the content's real height. The easing curve applies to the distance you can actually see, and the motion finishes exactly when the panel is fully open.</p>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <!-- What I found -->
+        <section aria-labelledby="found-heading">
+            <h2 id="found-heading">What I found while building this</h2>
+            <p>The course page animates a <code>.panel</code> inside the <code>details</code> element. In current Chrome that pattern opens with a jump and snaps shut, because a closed <code>details</code> stops rendering its content immediately, so the transition on the panel is never seen.</p>
+            <p>Chrome now wraps that content in a <code>::details-content</code> box. Animating the box with <code>height</code> and <code>content-visibility</code> fixes both directions. The panel itself then stops animating, because two nested height transitions fight each other. Use the second checkbox above to switch between the two.</p>
+        </section>
+
+        <!-- Support / fallback -->
+        <section aria-labelledby="support-heading">
+            <h2 id="support-heading">Browser support</h2>
+            <p id="support-status" class="status">Checking...</p>
+            <p>Chrome and Edge 129 added support in late 2024. Check Can I Use for the current picture in Firefox and Safari. Where the property is missing, a <code>CSS.supports()</code> check turns on a small JavaScript fallback in <code>app.js</code>.</p>
+        </section>
+
+    </main>
+
+    <footer class="text-center text-muted">
+        <p>interpolate-size demo for WDD 331R Advanced CSS.</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

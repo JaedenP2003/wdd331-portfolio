@@ -12,7 +12,7 @@
     align-items: end;
     min-height: clamp(26rem, 45vw, 40rem);
     overflow: hidden;
-    border-radius: var(--radius);
+    border-radius: var(--radius-md);
     box-shadow: var(--shadow-md);
     color: var(--hero-text);
 
@@ -142,7 +142,7 @@
     margin-top: var(--space-xl);
     padding: var(--space-lg);
     overflow: hidden;
-    border-radius: var(--radius);
+    border-radius: var(--radius-md);
 
     /* The image sits behind the panel */
     .glass-background {
@@ -164,7 +164,7 @@
     color: var(--color-text);
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
-    border-radius: var(--radius);
+    border-radius: var(--radius-md);
     box-shadow: var(--shadow-md);
     -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
     backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
@@ -238,7 +238,7 @@
         padding: var(--space-lg);
         text-align: center;
         color: var(--hero-text);
-        border-radius: var(--radius);
+        border-radius: var(--radius-md);
         box-shadow: var(--shadow-md);
 
         /* Color layer (bottom) + photo (top), blended with each other */

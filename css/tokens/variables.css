@@ -67,7 +67,7 @@
     --outline-width: 2px;
 
     /* Sticky offset: distance from the top edge where sticky elements stop */
-    --sticky-offset: 24px;
+    --sticky-offset: var(--space-lg);
 
     /* Shadows: layered stacks (ambient + key light). The colors come from
        --shadow-color / --shadow-color-soft in colors.css, so they adapt to dark mode. */
@@ -103,12 +103,4 @@
         drop-shadow(0 1px 0 var(--icon-outline))
         drop-shadow(0 -1px 0 var(--icon-outline))
         drop-shadow(0 8px 8px var(--shadow-color));
-
-    /* Legacy names: point at the tokens above so older rules keep working */
-    --font-family-sans: var(--font-family-body);
-    --font-family: var(--font-family-body);
-    --font-size-base: var(--font-size-body);
-    --font-size-small: var(--font-size-caption);
-    --line-height-base: var(--line-height-body);
-    --radius: var(--radius-md);
 }

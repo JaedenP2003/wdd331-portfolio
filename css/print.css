@@ -1,0 +1,238 @@
+/* Print stylesheet. Imported into the utilities layer (last), so it beats the
+   screen styles without needing !important.
+   The resume prints to match the one-page PDF resume: plain black on white,
+   Arial 11pt, bold uppercase section headings with a rule, bullets indented,
+   and skills in four columns.
+   Techniques: hide chrome, pt sizes with a clean sans typeface, surface link
+   URLs, keep entries together, orphans and widows, and exact color only where
+   it carries meaning. */
+
+@page {
+    margin: 0.72in;
+}
+
+@media print {
+    :root {
+        --print-font: Arial, Helvetica, sans-serif;
+        --print-link: #467886;   /* the link color from the PDF resume */
+    }
+
+    /* Always print the light theme. Dark mode would print a black page. */
+    html {
+        color-scheme: light;
+    }
+
+    body {
+        min-height: 0;
+        padding: 0;
+        background: none;
+        color: #000;
+        font-family: var(--print-font);
+        font-size: 11pt;
+        line-height: 1.15;
+    }
+
+    /* Hide chrome that has no purpose on paper */
+    .site-nav,
+    .theme-menu,
+    .no-print,
+    footer {
+        display: none;
+    }
+
+    /* Let the page fill the sheet instead of the screen layout's centered column */
+    body > :is(header, main) {
+        max-width: none;
+        margin-top: 0;
+    }
+
+    h1, h2, h3 {
+        font-family: var(--print-font);
+        font-weight: 700;
+        color: #000;
+        break-after: avoid;   /* never leave a heading alone at the bottom of a page */
+    }
+
+    /* Surface link URLs, since paper can't be clicked */
+    a {
+        color: var(--print-link);
+        text-decoration: underline;
+    }
+
+    a[href^="http"]::after {
+        content: " (" attr(href) ")";
+        font-size: 9pt;
+        font-weight: 400;
+        word-break: break-all;
+    }
+
+    /* No orphans or widows: at least two lines stay together at a page break */
+    p, li {
+        orphans: 2;
+        widows: 2;
+    }
+
+    /* ---- Resume ---- */
+
+    .resume-page {
+        /* Name and contact line: plain, no colored band */
+        .resume-header {
+            padding: 0;
+            margin-bottom: 14pt;
+            background: none;
+            color: #000;
+            border-radius: 0;
+
+            h1 {
+                font-size: 20pt;
+                line-height: 1.2;
+                font-variant-caps: small-caps;   /* matches the PDF's JAEDEN PLATT */
+            }
+        }
+
+        /* The link text already shows the address, so repeating the full URL
+           would just duplicate it. */
+        .resume-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0;
+            margin-top: 2pt;
+            font-size: 11pt;
+
+            /* Two spaces after the escape: the first one ends the \2022 escape */
+            li + li::before {
+                content: " \2022  ";
+                white-space: pre;
+            }
+
+            a::after {
+                content: none;
+            }
+        }
+
+        .resume {
+            section {
+                margin-top: 14pt;
+            }
+
+            section:first-child {
+                margin-top: 0;
+            }
+
+            h2 {
+                margin: 0 0 6pt;
+                padding: 0;
+                border: 0;
+                font-size: 12pt;
+                letter-spacing: 0;
+                text-transform: uppercase;
+
+                /* The section rule is a background-colored bar, and browsers drop
+                   backgrounds when printing by default. exact keeps the rule.
+                   It is applied to these bars only. */
+                &::after {
+                    content: "";
+                    display: block;
+                    height: 0.75pt;
+                    margin-top: 1pt;
+                    background: #000;
+                    print-color-adjust: exact;
+                    -webkit-print-color-adjust: exact;
+                }
+            }
+        }
+
+        /* Each entry: bold title with the date on the right, organization below,
+           then bullets. Keep the whole entry on one page. */
+        .entry {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            break-inside: avoid;
+            padding: 0;
+            background: none;
+            border: 0;
+            border-radius: 0;
+
+            & + .entry {
+                margin-top: 10pt;
+            }
+
+            h3 {
+                grid-column: 1;
+                grid-row: 1;
+                font-size: 11pt;
+            }
+
+            h3,
+            .stack {
+                font-family: var(--print-font);
+                font-weight: 700;
+                font-size: 11pt;
+                color: #000;
+            }
+
+            /* display: contents lets the organization and the date become grid items */
+            .meta {
+                display: contents;
+                font-size: 11pt;
+                color: #000;
+
+                span {
+                    grid-column: 1;
+                    grid-row: 2;
+                }
+
+                time {
+                    grid-column: 2;
+                    grid-row: 2;
+                }
+            }
+
+            &.entry--date-top .meta time {
+                grid-row: 1;
+            }
+
+            ul {
+                display: block;
+                grid-column: 1 / -1;
+                margin: 0;
+                padding: 0 0 0 36pt;
+                list-style: none;
+            }
+
+            li {
+                position: relative;
+
+                &::before {
+                    content: "\2022";
+                    position: absolute;
+                    left: -18pt;
+                }
+            }
+        }
+
+        /* Skills: four columns, filled down each column */
+        .skills {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(2, auto);
+            grid-auto-flow: column;
+            margin: 0;
+            padding: 0;
+
+            li {
+                position: relative;
+                display: block;
+                padding: 0 0 0 36pt;
+                background: none;
+                border: 0;
+
+                &::before {
+                    content: "\2022";
+                    position: absolute;
+                    left: 18pt;
+                }
+            }
+        }
+    }
+}

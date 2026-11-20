@@ -1,0 +1,263 @@
+/* =====================================================================
+   interpolate-size DEMO: styles.css
+   The top of this file is the CSS you show in the video, in the same
+   order as the video. Look for the VIDEO banners. Everything under the
+   "SKIP ON CAMERA" banner is layout and theming.
+   Tokens and base styles come from the shared css/main.css.
+   ===================================================================== */
+
+
+/* VIDEO 2:30 : Opting in. One line on :root, inherited by the whole page.
+   ===================================================================== */
+:root {
+    interpolate-size: allow-keywords;
+}
+
+/* The demo checkbox switches the opt-in off so you can show the "before".
+   numeric-only is the default value: height can animate between numbers,
+   but not to or from keywords like auto. */
+:root:has(#opt-in:not(:checked)) {
+    interpolate-size: numeric-only;
+}
+
+
+/* VIDEO 4:30 : The height-to-auto pattern from the course page
+   ===================================================================== */
+.panel {
+    height: 0;
+    overflow: hidden;   /* clips the content while the panel is shorter than it */
+    transition: height var(--duration, 0.35s) ease;
+}
+
+/* The browser sets [open] when the summary is clicked. No JavaScript. */
+details[open] .panel {
+    height: auto;
+}
+
+/* Every animated disclosure needs this */
+@media (prefers-reduced-motion: reduce) {
+    .panel,
+    summary::after {
+        transition: none;
+    }
+}
+
+
+/* VIDEO 7:30 : What I found: newer Chrome needs one more step
+   Chrome 131 wrapped a details element's content in a ::details-content box
+   that stops rendering the moment the details closes. So the .panel pattern
+   above opens with a jump and snaps shut. The fix is to animate that box
+   instead (this is why the course pattern needs the extra step in new browsers).
+   Nested transitions would fight each other, so .panel stops animating. */
+@supports selector(::details-content) {
+    :root:has(#enhance:checked) {
+        .panel {
+            height: auto;
+            transition: none;
+        }
+
+        .accordion details::details-content {
+            height: 0;
+            overflow: clip;
+            transition:
+                height var(--duration, 0.35s) ease,
+                content-visibility var(--duration, 0.35s) allow-discrete;
+        }
+
+        .accordion details[open]::details-content {
+            height: auto;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        :root:has(#enhance:checked) .accordion details::details-content {
+            transition: none;
+        }
+    }
+}
+
+
+/* VIDEO 9:00 : Why max-height stalls (both use the ::details-content box)
+   ===================================================================== */
+@supports selector(::details-content) {
+    .cmp-max::details-content,
+    .cmp-auto::details-content {
+        overflow: clip;
+        transition:
+            max-height var(--duration, 0.35s) ease,
+            height var(--duration, 0.35s) ease,
+            content-visibility var(--duration, 0.35s) allow-discrete;
+    }
+
+    /* The guess: far taller than the content */
+    .cmp-max::details-content { max-height: 0; }
+    .cmp-max[open]::details-content { max-height: 100rem; }
+
+    /* The real height: from 0 to exactly the content's size */
+    .cmp-auto::details-content { height: 0; }
+    .cmp-auto[open]::details-content { height: auto; }
+
+    @media (prefers-reduced-motion: reduce) {
+        .cmp-max::details-content,
+        .cmp-auto::details-content {
+            transition: none;
+        }
+    }
+}
+
+
+/* VIDEO 11:30 : Support check
+   ===================================================================== */
+.support-no {
+    display: none;
+}
+
+@supports not (interpolate-size: allow-keywords) {
+    .support-yes { display: none; }
+    .support-no { display: block; }
+}
+
+
+/* =====================================================================
+   SKIP ON CAMERA: layout and theming
+   ===================================================================== */
+
+.interpolate-page {
+    h2 {
+        margin-top: var(--space-xl);
+        margin-bottom: var(--space-sm);
+    }
+
+    p {
+        max-width: 70ch;
+        margin-bottom: var(--space-sm);
+    }
+
+    code {
+        font-family: var(--font-family-mono);
+        font-size: 0.9em;
+        padding: 0 var(--space-xs);
+        background: var(--color-surface);
+        border-radius: var(--radius-sm);
+    }
+
+    .support {
+        width: fit-content;
+        padding: var(--space-xs) var(--space-sm);
+        border-radius: var(--radius-md);
+        font-size: var(--font-size-caption);
+    }
+
+    .support-yes {
+        background: color-mix(in oklch, var(--color-accent) 20%, transparent);
+    }
+
+    .support-no {
+        background: color-mix(in oklch, red 25%, transparent);
+    }
+
+    .control-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-md);
+        margin-bottom: var(--space-sm);
+    }
+
+    .toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-sm);
+        padding: var(--space-sm) var(--space-md);
+        background: var(--color-surface);
+        border: 1px solid var(--color-border-strong);
+        border-radius: var(--radius-md);
+    }
+
+    select {
+        font: inherit;
+        padding: var(--space-xs) var(--space-sm);
+        background: var(--color-bg);
+        color: var(--color-text);
+        border: 1px solid var(--color-border-strong);
+        border-radius: var(--radius-sm);
+    }
+
+    .status {
+        font-family: var(--font-family-mono);
+        font-size: var(--font-size-caption);
+    }
+
+    /* Accordion look */
+    .accordion {
+        display: grid;
+        gap: var(--space-sm);
+        max-width: 80rem;
+    }
+
+    details {
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+    }
+
+    summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-md);
+        padding: var(--space-md);
+        font-weight: 700;
+        cursor: pointer;
+        list-style: none;
+
+        &::-webkit-details-marker {
+            display: none;
+        }
+
+        /* Chevron that rotates when the details is open */
+        &::after {
+            content: "";
+            flex: none;
+            width: 0.8rem;
+            height: 0.8rem;
+            border-right: 2px solid currentColor;
+            border-bottom: 2px solid currentColor;
+            transform: rotate(45deg);
+            transition: transform var(--duration, 0.35s) ease;
+        }
+
+        &:focus-visible {
+            outline: var(--outline-width) solid var(--color-focus);
+            outline-offset: 2px;
+            border-radius: var(--radius-lg);
+        }
+    }
+
+    details[open] > summary::after {
+        transform: rotate(-135deg);
+    }
+
+    /* The padding sits on an inner element. Padding on the panel itself would
+       stay visible at height 0. */
+    .panel-content {
+        padding: 0 var(--space-md) var(--space-md);
+    }
+
+    .panel-content p:last-child {
+        margin-bottom: 0;
+    }
+
+    .compare {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 32rem), 1fr));
+        gap: var(--space-lg);
+        align-items: start;
+
+        h3 {
+            margin-bottom: var(--space-sm);
+            font-family: var(--font-family-body);
+            font-weight: 700;
+            font-size: var(--font-size-body);
+        }
+    }
+}

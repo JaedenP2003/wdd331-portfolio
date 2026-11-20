@@ -11,20 +11,54 @@
     <nav class="site-nav" aria-label="Main">
         <span class="brand">Jaeden Platt</span>
         <ul>
-            <li><a href="unit-1/custom-properties/index.html">Custom Properties and Nesting</a></li>
-            <li><a href="unit-1/choose-topic/demo.html">nth-child() Demo</a></li>
-            <li><a href="unit-2/layered-components/index.html">Layered Components</a></li>
-            <li><a href="unit-2/lightning-css-demo/index.html">Lightning CSS Demo</a></li>
-            <li><a href="unit-3/visual-effects/index.html">Visual Effects</a></li>
-            <li><a href="unit-3/blend-modes-demo/index.html">Blend Modes Demo</a></li>
-            <li><a href="unit-4/grid-layouts/editorial.html">Editorial Layout</a></li>
-            <li><a href="unit-4/grid-layouts/cards.html">Card Grid</a></li>
-            <li><a href="unit-4/display-contents-demo/index.html">display: contents Demo</a></li>
-            <li><a href="unit-4/advanced/container-demo.html">Container Query Demo</a></li>
-            <li><a href="unit-4/advanced/sticky-demo.html">Sticky Demo</a></li>
-            <li><a href="unit-4/anchor-positioning-demo/index.html">Anchor Positioning Demo</a></li>
-            <li><a href="unit-5/typography/index.html">Typography Tokens</a></li>
-            <li><a href="unit-5/font-subsetting-demo/index.html">Font Subsetting Demo</a></li>
+            <li><a href="index.html" aria-current="page">Home</a></li>
+            <li>
+                <button type="button" class="projects-btn" popovertarget="projects-menu">Projects</button>
+                <div id="projects-menu" class="projects-menu" popover>
+                    <div class="unit">
+                        <p class="unit-label" id="u1">Unit 1</p>
+                        <ul aria-labelledby="u1">
+                            <li><a href="unit-1/custom-properties/index.html">Custom Properties and Nesting</a></li>
+                            <li><a href="unit-1/choose-topic/demo.html">nth-child() Demo</a></li>
+                        </ul>
+                    </div>
+                    <div class="unit">
+                        <p class="unit-label" id="u2">Unit 2</p>
+                        <ul aria-labelledby="u2">
+                            <li><a href="unit-2/layered-components/index.html">Layered Components</a></li>
+                            <li><a href="unit-2/lightning-css-demo/index.html">Lightning CSS Demo</a></li>
+                        </ul>
+                    </div>
+                    <div class="unit">
+                        <p class="unit-label" id="u3">Unit 3</p>
+                        <ul aria-labelledby="u3">
+                            <li><a href="unit-3/visual-effects/index.html">Visual Effects</a></li>
+                            <li><a href="unit-3/blend-modes-demo/index.html">Blend Modes Demo</a></li>
+                        </ul>
+                    </div>
+                    <div class="unit">
+                        <p class="unit-label" id="u4">Unit 4</p>
+                        <ul aria-labelledby="u4">
+                            <li><a href="unit-4/grid-layouts/editorial.html">Editorial Layout</a></li>
+                            <li><a href="unit-4/grid-layouts/cards.html">Card Grid</a></li>
+                            <li><a href="unit-4/display-contents-demo/index.html">display: contents Demo</a></li>
+                            <li><a href="unit-4/advanced/container-demo.html">Container Query Demo</a></li>
+                            <li><a href="unit-4/advanced/sticky-demo.html">Sticky Demo</a></li>
+                            <li><a href="unit-4/anchor-positioning-demo/index.html">Anchor Positioning Demo</a></li>
+                        </ul>
+                    </div>
+                    <div class="unit">
+                        <p class="unit-label" id="u5">Unit 5</p>
+                        <ul aria-labelledby="u5">
+                            <li><a href="unit-5/typography/index.html">Typography Tokens</a></li>
+                            <li><a href="unit-5/font-subsetting-demo/index.html">Font Subsetting Demo</a></li>
+                            <li><a href="unit-5/interpolate-size/index.html">interpolate-size Demo</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+            <li><a href="resume.html">Resume</a></li>
+            <li><a href="contact.html">Contact</a></li>
         </ul>
         <details class="theme-menu">
             <summary class="theme-control">
@@ -132,6 +166,18 @@
                 <li class="card" data-unit="5">
                     <span class="card-tag">Unit 5</span>
                     <h3><a href="unit-5/font-subsetting-demo/index.html">Font Subsetting Demo</a></h3>
+                </li>
+                <li class="card" data-unit="5">
+                    <span class="card-tag">Unit 5</span>
+                    <h3><a href="unit-5/interpolate-size/index.html">interpolate-size Demo</a></h3>
+                </li>
+                <li class="card" data-unit="5">
+                    <span class="card-tag">Unit 5</span>
+                    <h3><a href="resume.html">Resume</a></h3>
+                </li>
+                <li class="card" data-unit="5">
+                    <span class="card-tag">Unit 5</span>
+                    <h3><a href="contact.html">Contact</a></h3>
                 </li>
             </ul>
         </section>

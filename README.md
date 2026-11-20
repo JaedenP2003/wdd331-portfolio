@@ -28,6 +28,9 @@ every push to main.
 - [Anchor Positioning Demo](unit-4/anchor-positioning-demo/index.html)
 - [Typography Tokens](unit-5/typography/index.html)
 - [Font Subsetting Demo](unit-5/font-subsetting-demo/index.html)
+- [interpolate-size Demo](unit-5/interpolate-size/index.html)
+- [Resume](resume.html)
+- [Contact](contact.html)
 
 ## CSS Architecture
 
@@ -84,6 +87,13 @@ All type tokens live in `css/tokens/variables.css`, and the `@font-face` rules a
 - **Roles:** components use semantic roles, never steps directly: `--font-size-body`, `--font-size-lead`, `--font-size-caption`, `--font-size-heading-sm`, `--font-size-heading-lg` and `--font-size-display`. Changing the hierarchy means changing which step a role points at.
 - **Fonts:** two self-hosted Latin subsets in `fonts/`: The Wild Breath of Zelda for the display role (`--font-family-display`) and Triforce for headings (`--font-family-heading`). Body text uses the system stack (`--font-family-body`). Both use `font-display: swap` with a serif fallback stack. Fonts were downloaded from zeldauniverse.net.
 - **Specimen:** [Typography Tokens](unit-5/typography/index.html) shows every step and role, with live sizes as the window resizes.
+
+## Resume, Print and Contact Form
+
+- **Resume:** [resume.html](resume.html) uses semantic sections and entries, styled by `css/components/resume.css` with the shared type and color tokens.
+- **Print stylesheet:** `css/print.css` is imported into the last cascade layer, so it wins over the screen styles. For print it hides the nav and theme toggle, forces the light theme, switches to a clean sans typeface in pt, prints link URLs after each link, keeps each experience entry on one page with `break-inside: avoid`, sets `orphans` and `widows`, and uses `print-color-adjust: exact` only on the teal header band.
+- **Contact form:** [contact.html](contact.html) has labeled name, email and message fields plus a subscribe checkbox. Control styles are in `css/base/elements.css`, layout is in `css/components/forms.css`, and the message box uses `field-sizing: content` with `min-height` and `max-height`. The checkbox picks up the brand color from `accent-color` on `:root` in `css/tokens/colors.css`. The form is a stub and does not send anything.
+- **Token audit:** removed eight legacy alias tokens (`--radius`, `--color-background`, `--color-primary`, `--font-family`, `--font-family-sans`, `--font-size-base`, `--font-size-small`, `--line-height-base`) after pointing every use at the current names, made `--sticky-offset` reference `--space-lg`, and fixed two undefined tokens in `theme-toggle.css`.
 
 ## Visual Effects
 
