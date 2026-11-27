@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The flight path for the motion path demo, as a vector tool would export it.
+     Open this file in a text editor and look for the d attribute on the <path>.
+     The viewBox is 600 x 300, so the CSS stage is 600px x 300px too. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="300" viewBox="0 0 600 300">
+  <path id="flight-path"
+        d="M 40 240 C 120 40, 220 40, 300 150 S 460 270, 560 60"
+        fill="none" stroke="#3fb6c9" stroke-width="2" stroke-dasharray="8 8"/>
+</svg>

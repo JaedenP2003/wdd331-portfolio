@@ -31,6 +31,8 @@ every push to main.
 - [interpolate-size Demo](unit-5/interpolate-size/index.html)
 - [Resume](resume.html)
 - [Contact](contact.html)
+- [Activity Dashboard (meaningful motion)](unit-6/motion/index.html)
+- [Motion Path Demo](unit-6/motion-path/index.html)
 
 ## CSS Architecture
 
