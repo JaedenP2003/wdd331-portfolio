@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motion Path Demo</title>
+    <script src="../../js/theme-preference.js"></script>
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="motion-path.css">
+</head>
+<body class="motion-page">
+
+    <header>
+        <a href="../../index.html">Back to portfolio</a>
+        <h1>Motion Path Demo</h1>
+        <p class="text-muted">A glider that follows a curve, using only <code>offset-path</code> and <code>offset-distance</code>.</p>
+        <p class="motion-status motion-on">Motion is on. Your system has no reduced motion preference.</p>
+        <p class="motion-status motion-off">Reduced motion is on, so the gliders rest at their destinations.</p>
+    </header>
+
+    <main>
+
+        <!-- 1. The flight -->
+        <section class="demo" aria-labelledby="flight-heading">
+            <h2 id="flight-heading">1. Follow the path</h2>
+            <p>The dashed line is the SVG path from <code>path.svg</code>. The glider uses the same <code>d</code> string in CSS.</p>
+
+            <div class="controls">
+                <label class="toggle"><input type="checkbox" id="rotate" checked> <code>offset-rotate: auto</code></label>
+                <label class="toggle"><input type="checkbox" id="scrub"> Pause and scrub</label>
+                <label class="toggle">offset-distance
+                    <input type="range" id="distance" min="0" max="100" value="0" aria-describedby="distance-value">
+                    <output id="distance-value">0%</output>
+                </label>
+                <label class="toggle">Speed
+                    <select id="speed">
+                        <option value="4s" selected>Normal (4s)</option>
+                        <option value="8s">Slow (8s)</option>
+                        <option value="2s">Fast (2s)</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="stage-wrap">
+                <div class="stage">
+                    <svg class="track" viewBox="0 0 600 300" aria-hidden="true">
+                        <path d="M 40 240 C 120 40, 220 40, 300 150 S 460 270, 560 60"/>
+                        <circle cx="40" cy="240" r="6"/>
+                        <circle cx="560" cy="60" r="6"/>
+                    </svg>
+                    <svg class="glider flight" viewBox="0 0 48 32" aria-hidden="true">
+                        <path d="M2 2 L46 16 L2 30 L12 16 Z"/>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Coordinate systems -->
+        <section class="demo" aria-labelledby="coords-heading">
+            <h2 id="coords-heading">2. The coordinate system has to match</h2>
+            <p>Numbers in <code>path()</code> are pixels measured from the stage, not from the SVG's <code>viewBox</code>. Shrink the drawing without changing the CSS and the glider leaves the line.</p>
+
+            <div class="controls">
+                <label class="toggle"><input type="checkbox" id="shrink"> Shrink only the SVG to 450 &times; 225</label>
+            </div>
+
+            <div class="stage-wrap">
+                <div class="stage">
+                    <svg class="track track-shrinkable" viewBox="0 0 600 300" aria-hidden="true">
+                        <path d="M 40 240 C 120 40, 220 40, 300 150 S 460 270, 560 60"/>
+                    </svg>
+                    <svg class="glider coords" viewBox="0 0 48 32" aria-hidden="true">
+                        <path d="M2 2 L46 16 L2 30 L12 16 Z"/>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Arc motion with transforms -->
+        <section class="demo" aria-labelledby="arc-heading">
+            <h2 id="arc-heading">3. Do you even need a path?</h2>
+            <p>All three gliders travel from the same start to the same end.</p>
+
+            <div class="lanes">
+                <figure>
+                    <figcaption><strong>A. Transform arc, as published.</strong> Both animations set <code>translate</code>, so it swings out and drifts back.</figcaption>
+                    <div class="lane"><span class="dot arc-published"></span></div>
+                </figure>
+                <figure>
+                    <figcaption><strong>B. Transform arc, fixed</strong> with <code>animation-composition: add</code>.</figcaption>
+                    <div class="lane"><span class="dot arc-fixed"></span></div>
+                </figure>
+                <figure>
+                    <figcaption><strong>C. Motion path.</strong> The same arc, drawn as a path, with auto rotation.</figcaption>
+                    <div class="lane">
+                        <svg class="glider arc-path" viewBox="0 0 48 32" aria-hidden="true">
+                            <path d="M2 2 L46 16 L2 30 L12 16 Z"/>
+                        </svg>
+                    </div>
+                </figure>
+            </div>
+        </section>
+
+        <!-- 4. Reduced motion -->
+        <section class="demo" aria-labelledby="motion-heading">
+            <h2 id="motion-heading">4. Reduced motion</h2>
+            <p>By default every glider sits at the end of its route, with no animation. The animations are added only inside <code>@media (prefers-reduced-motion: no-preference)</code>. To see it, open DevTools, run "Emulate CSS prefers-reduced-motion" and choose <code>reduce</code>.</p>
+        </section>
+
+    </main>
+
+    <footer class="text-center text-muted">
+        <p>Motion path demo for WDD 331R Advanced CSS.</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

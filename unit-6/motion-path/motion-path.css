@@ -1,0 +1,269 @@
+/* =====================================================================
+   MOTION PATH DEMO: motion-path.css
+   The top of this file is the CSS you show in the video, in the same
+   order as the video. Look for the VIDEO banners. Everything under the
+   "SKIP ON CAMERA" banner is layout and theming.
+   Tokens and base styles come from the shared css/main.css.
+   ===================================================================== */
+
+
+/* VIDEO 3:30 : offset-path and offset-distance
+   The d string from path.svg, pasted into path().
+   By default the glider rests at its destination (100%).
+   ===================================================================== */
+.flight,
+.coords {
+    offset-path: path('M 40 240 C 120 40, 220 40, 300 150 S 460 270, 560 60');
+    offset-distance: 100%;
+}
+
+
+/* VIDEO 5:30 : offset-rotate
+   auto turns the element to face the direction of travel.
+   ===================================================================== */
+.flight,
+.coords {
+    offset-rotate: auto;
+}
+
+/* The checkbox switches rotation off: the element stays upright */
+.demo:has(#rotate:not(:checked)) .flight {
+    offset-rotate: 0deg;
+}
+
+
+/* VIDEO 7:00 : Coordinate systems
+   The path() numbers are pixels. If the drawing shrinks and the CSS does not,
+   they stop lining up.
+   ===================================================================== */
+.demo:has(#shrink:checked) .track-shrinkable {
+    width: 450px;
+    height: 225px;
+}
+
+
+/* VIDEO 8:30 : Transform arc vs motion path
+   ===================================================================== */
+
+/* A. As published on the course page: both animations set translate, so they
+      don't add up. The second one starts from the first one's value and heads
+      to "0 120px", so the dot swings out, drifts back and lands straight below
+      the start instead of 300px to the right. */
+@keyframes arc-x { to { translate: 300px 0; } }
+@keyframes arc-y { to { translate: 0 120px; } }
+
+/* C. The same arc as a path (a quadratic curve to 300px right, 120px down) */
+.arc-path {
+    offset-path: path('M 24 24 Q 324 24 324 144');
+    offset-distance: 100%;
+    offset-rotate: auto;
+}
+
+/* Resting positions for the two dots when motion is reduced */
+.arc-published { translate: 0 120px; }
+.arc-fixed { translate: 300px 120px; }
+
+
+/* VIDEO 11:00 : Reduced motion
+   Nothing animates unless the visitor has no preference against motion.
+   Otherwise every element simply sits at its destination.
+   ===================================================================== */
+@media (prefers-reduced-motion: no-preference) {
+
+    @keyframes follow-path {
+        from { offset-distance: 0%; }
+        to   { offset-distance: 100%; }
+    }
+
+    .flight,
+    .coords {
+        animation: follow-path var(--duration, 4s) ease-in-out infinite alternate;
+    }
+
+    .arc-path {
+        animation: follow-path 1.6s ease-in infinite;
+    }
+
+    /* A. Published version: the y animation takes over the x movement */
+    .arc-published {
+        translate: none;
+        animation:
+            arc-x 1.6s ease-out infinite,
+            arc-y 1.6s ease-in infinite;
+    }
+
+    /* B. Fixed: "add" combines the two translate animations */
+    .arc-fixed {
+        translate: none;
+        animation:
+            arc-x 1.6s ease-out infinite,
+            arc-y 1.6s ease-in infinite;
+        animation-composition: add;
+    }
+
+    /* Pause and scrub: stop the animation and set the distance by hand */
+    .demo:has(#scrub:checked) .flight {
+        animation: none;
+        offset-distance: var(--scrub, 0%);
+    }
+}
+
+
+/* VIDEO 12:00 : Showing the preference on the page
+   ===================================================================== */
+.motion-off { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+    .motion-on { display: none; }
+    .motion-off { display: block; }
+}
+
+
+/* =====================================================================
+   SKIP ON CAMERA: layout and theming
+   ===================================================================== */
+
+.motion-page {
+    .demo {
+        margin-top: var(--space-xl);
+    }
+
+    p {
+        max-width: 70ch;
+        margin-bottom: var(--space-sm);
+    }
+
+    h2 {
+        margin-bottom: var(--space-sm);
+    }
+
+    code {
+        font-family: var(--font-family-mono);
+        font-size: 0.9em;
+        padding: 0 var(--space-xs);
+        background: var(--color-surface);
+        border-radius: var(--radius-sm);
+    }
+
+    .motion-status {
+        width: fit-content;
+        padding: var(--space-xs) var(--space-sm);
+        background: color-mix(in oklch, var(--color-accent) 20%, transparent);
+        border-radius: var(--radius-md);
+        font-size: var(--font-size-caption);
+    }
+
+    .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-md);
+        margin-block: var(--space-sm) var(--space-md);
+    }
+
+    .toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-sm);
+        padding: var(--space-sm) var(--space-md);
+        background: var(--color-surface);
+        border: 1px solid var(--color-border-strong);
+        border-radius: var(--radius-md);
+    }
+
+    select {
+        width: auto;
+        padding-block: var(--space-xs);
+    }
+
+    input[type="range"] {
+        width: 16rem;
+    }
+
+    output {
+        min-width: 4ch;
+        font-family: var(--font-family-mono);
+    }
+
+    /* The stage is exactly 600 x 300 so path() pixels match the viewBox */
+    .stage-wrap {
+        container-type: inline-size;
+    }
+
+    .stage {
+        position: relative;
+        width: 600px;
+        height: 300px;
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        box-sizing: content-box;
+    }
+
+    /* Narrow screens: zoom scales the drawing and the path together */
+    @container (max-width: 610px) {
+        .stage { zoom: 0.75; }
+    }
+
+    @container (max-width: 460px) {
+        .stage { zoom: 0.52; }
+    }
+
+    .track {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 600px;
+        height: 300px;
+
+        path {
+            fill: none;
+            stroke: var(--color-accent);
+            stroke-width: 2;
+            stroke-dasharray: 8 8;
+        }
+
+        circle {
+            fill: var(--color-accent);
+        }
+    }
+
+    .glider {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 48px;
+        height: 32px;
+        fill: var(--color-focus);
+    }
+
+    .lanes {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 40rem), 1fr));
+        gap: var(--space-lg);
+    }
+
+    figcaption {
+        margin-bottom: var(--space-sm);
+    }
+
+    .lane {
+        position: relative;
+        width: 360px;
+        max-width: 100%;
+        height: 180px;
+        overflow: hidden;
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+    }
+
+    .dot {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        width: 24px;
+        height: 24px;
+        background: var(--color-focus);
+        border-radius: 50%;
+    }
+}

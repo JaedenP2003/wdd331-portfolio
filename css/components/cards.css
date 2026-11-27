@@ -33,7 +33,8 @@
     &:has(#filter-2:checked) .card:not([data-unit="2"]),
     &:has(#filter-3:checked) .card:not([data-unit="3"]),
     &:has(#filter-4:checked) .card:not([data-unit="4"]),
-    &:has(#filter-5:checked) .card:not([data-unit="5"]) {
+    &:has(#filter-5:checked) .card:not([data-unit="5"]),
+    &:has(#filter-6:checked) .card:not([data-unit="6"]) {
         display: none;
     }
 }
